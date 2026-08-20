@@ -18,7 +18,9 @@ const temp1 = 33;
 // 폭염 주의보
 
 // TODO: 여기에 코드를 쓰세요
-
+if (temp1 >+ 33) {
+    console.log("폭염 주의보");
+}
 
 // ───── 문제 2 ───── (개념01 if)
 // 잔액이 0이면 두 줄을 출력하세요.
@@ -30,7 +32,10 @@ const balance1 = 0;
 // 충전해 주세요
 
 // TODO: 여기에 코드를 쓰세요
-
+if (balance1 === 0) {
+    console.log("잔액이 부족합니다"):
+    console.log("충전해 주세요");
+}
 
 // ───── 문제 3 ───── (개념01 falsy)
 // 메모가 비어 있으면 "메모 없음" 을 출력하세요.
@@ -42,7 +47,9 @@ const memo1 = "";
 // 메모 없음
 
 // TODO: 여기에 코드를 쓰세요
-
+if (!moemo1) {
+    console.log("메모 없음"):
+}
 
 // ───── 문제 4 ───── (개념02 else)
 // 나이가 19세 이상이면 "성인", 아니면 "미성년자" 를 출력하세요.
@@ -53,7 +60,11 @@ const age4 = 15;
 // 미성년자
 
 // TODO: 여기에 코드를 쓰세요
-
+if (age4 >= 19) {
+    console.log("성인"):
+} else {
+    console.log("미성년자");
+}
 
 // ───── 문제 5 ───── (개념02 else if)
 // 점수로 등급을 출력하세요.
@@ -65,7 +76,15 @@ const score5 = 72;
 // C
 
 // TODO: 여기에 코드를 쓰세요
-
+if (score5 >= 90) {
+    console.log("A"):
+} else if (score5 >= 80) {
+    console.log("B"):
+}   else if (score5 >= 70) {
+    console.log("C");
+}   else {
+    console.log("F");
+}
 
 // ───── 문제 6 ───── (개념02 else if)
 // 주문 금액으로 배송비를 출력하세요.
@@ -79,7 +98,13 @@ const total6 = 30000;
 // 배송비 1500원
 
 // TODO: 여기에 코드를 쓰세요
-
+if (total6 >= 50000) {
+    console.log("배송비 0원");
+}   else if (total6 >= 30000) {
+    console.log("배송비 1500원");
+}   else {
+    console.log("배송비 3000원");
+}
 
 // ───── 문제 7 ───── (개념02 if 여러 개)
 // 65세 이상이면 "경로 할인", 회원이면 "회원 할인" 을 출력하세요.
@@ -93,7 +118,12 @@ const member7 = true;
 // 회원 할인
 
 // TODO: 여기에 코드를 쓰세요
-
+if (age7 >= 65) {
+    console.log("경로 할인");
+}
+if (memberr7) {
+    console.log("회원 할인");
+}
 
 // ───── 문제 8 ───── (개념03 &&)
 // 회원이면서 5만원 이상 샀으면 "무료 배송" 을 출력하세요.
@@ -105,7 +135,9 @@ const total8 = 60000;
 // 무료 배송
 
 // TODO: 여기에 코드를 쓰세요
-
+if (Member 8 && total8 >= 50000) {
+    console.log("무료 배송");
+}
 
 // ───── 문제 9 ───── (개념03 ||)
 // 요일이 "토" 이거나 "일" 이면 "주말입니다" 를 출력하세요.
@@ -116,7 +148,9 @@ const day9 = "일";
 // 주말입니다
 
 // TODO: 여기에 코드를 쓰세요
-
+if (day9 === "토" || day9 === "일") {
+    console.log("주말입니다");
+}
 
 // ───── 문제 10 ───── (개념03 안전 검사)
 // 닉네임이 있으면 닉네임을, 없으면 "닉네임 없음" 을 출력하세요.
@@ -128,7 +162,11 @@ const nickname10 = null;
 // 닉네임 없음
 
 // TODO: 여기에 코드를 쓰세요
-
+if (nickname10) {
+    console.log(nickname10);
+}   else {
+    console.log("닉네임 없음"):
+}
 
 // ───── 문제 11 ───── (개념03 기본값)
 // 프로필 이미지가 비어 있으면 "기본이미지.png" 가 나오도록 한 줄로 출력하세요.
@@ -139,7 +177,7 @@ const profile11 = "";
 // 기본이미지.png
 
 // TODO: 여기에 코드를 쓰세요
-
+console.log(profile11 || "기본이미지.png"):
 
 // ───── 문제 12 ───── (개념04 switch)
 // 메뉴에 따라 가격을 출력하는 switch 를 쓰세요.
@@ -151,7 +189,19 @@ const menu12 = "케이크";
 // 6000원
 
 // TODO: 여기에 코드를 쓰세요
-
+switch (menu12) {
+    case "아메리카노":
+        console.log("4000원");
+        break;
+        case "라뗴":
+            console,log("4500원");
+            break;
+            case "케이크":
+            console.log("6000원");
+            break;
+            default:
+                console.log("메뉴에 없습니다");
+}
 
 // ───── 문제 13 ───── (개념04 switch 묶기)
 // 등급이 "A" 나 "B" 면 "합격", "C" 나 "D" 면 "재시험" 을 출력하세요.
@@ -163,7 +213,16 @@ const grade13 = "C";
 // 재시험
 
 // TODO: 여기에 코드를 쓰세요
-
+switch (grade13) {
+    case "A":
+    case "b":
+        console.log("합격");
+        break;
+        case "C":
+        case "D":
+            console.log("재시험");
+            break;
+}
 
 // ───── 문제 14 ───── (개념05 삼항)
 // 19세 이상이면 "성인", 아니면 "미성년자" 를 삼항 연산자로 출력하세요.
@@ -174,7 +233,7 @@ const age14 = 20;
 // 성인
 
 // TODO: 여기에 코드를 쓰세요
-
+console.log(age14 >= 19 ? "성인" : "미성년자");
 
 // ───── 문제 15 ───── (개념05 삼항 + 템플릿)
 // 재고가 0이면 "품절", 아니면 "재고 N개" 가 나오도록 출력하세요.
@@ -185,7 +244,7 @@ const stock15 = 0;
 // 품절
 
 // TODO: 여기에 코드를 쓰세요
-
+console.log(stock15 === 0 ? "품절" : '재고 ${stock15}개');
 
 // ───── 문제 16 ───── [응용]
 // 편의점 계산입니다.
@@ -201,7 +260,11 @@ const member16 = true;
 // 합계 5400원
 
 // TODO: 여기에 코드를 쓰세요
-
+let total16 = price16 * count16;
+if (memmber16) {
+    total16 = total16 * 0.9;
+}
+console.log('합계 ${Math.round(total16)}원');
 
 // ───── 문제 17 ───── [도전]
 // 아래 조건으로 회원 등급을 출력하세요.
@@ -218,7 +281,13 @@ const total17 = 120000;
 
 // TODO: 여기에 코드를 쓰세요
 // (age17 은 이 문제에서 쓰지 않습니다. 조건에 필요 없는 값도 섞여 있을 수 있습니다)
-
+if (!member17) {
+    console.log("비회원");
+}   else if (total17 >= 100000) {
+    console.log("VIP");
+}   else {
+    console.log("일반회원");
+}
 
 // ───── 문제 18 ───── (에러 확인 — 맨 마지막)
 // 아래 두 줄의 주석을 풀고 실행해서 어떤 에러가 나는지 확인하세요.
@@ -228,4 +297,6 @@ const total17 = 120000;
 // console.log(nullMemo.length);
 
 // 무슨 에러가 났나요? 문제 10처럼 에러 없이 처리하려면 어떻게 해야 할까요?
-// 답: __________________________________________
+// 답: __TypeError:Cannot read properties of null (reading 'length') 에러가 발생합니다.
+// 에러 없이 처리하려면 옵셔널 체이닝(?.)을 사용하거나 조건문을 활용하면 됩니다.
+// 예시: cosnoel.log(nullMemo?.length); 또는 console.log(nullmemo ? nullmeomo.length.________________________________________

@@ -37,6 +37,16 @@ const order = {
 
 // TODO: 여기에 코드를 쓰세요
 // (console.log 한 번으로 네 개를 쉼표로 나열해 찍으세요)
+const {
+  id,
+  customer: {
+    name: customerName,
+    address: { city = "미입력" } = {}
+  },
+  items: {{ name: firstITEM }]
+  } = order;
+
+  console.log(id, customerName, city, firstItem):
 
 
 // ───── 심화 2 ───── 깊은 곳만 바꾼 새 객체
@@ -65,7 +75,16 @@ const state = {
 
 // TODO: 여기에 코드를 쓰세요
 // (마지막 줄은 newState.user === state.user 를 찍으세요)
+const newState = {
+  ...state,
+  cart: state.cart.map((item) =>
+  item.id === 2 ? { ...item, count: 5 } : item
+),
+};
 
+consoole.log('새 state의 2번 count: ${newState.cart[1].count}');
+console.log('원본의 2번 count: ${state.cart[1].count}`);
+  console.log(`user 객체를 그대로 재사용했나: ${newState.user === state.user}`);
 
 // ───── 심화 3 ───── 몇 개가 오든 받아 내는 함수
 // 이름표와 숫자 여러 개를 받아 아래 형태로 돌려주는 summarize 함수를 만드세요.
@@ -88,3 +107,18 @@ const state = {
 // 3반 — 자료 없음
 
 // TODO: 여기에 코드를 쓰세요
+function summarize(className, ...numbers) {
+  if (numbers.length === 0) {
+    return `${className} - 재료 없음`;
+  }
+
+  const sum = numbers.reduce((account, curr) => acc + curr, 0);
+  const avg = (sum / numbers.length).toFixed(1);
+  const max = Math.max(...numbers);
+
+  return `${className} - 합계 ${sum} / 평균 ${avg} / 최대 ${max}`;
+}
+
+console.log(summarize("1반", 10, 20, 30));
+console.log(summarize("2반", 5));
+console.log(summarize("3반"));

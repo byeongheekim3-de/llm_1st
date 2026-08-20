@@ -41,6 +41,9 @@ console.log(typeof Math.random());
 // 출력: number
 
 // ✏️ 직접 해보기 1 — Math.random() 을 세 번 찍어 보고 값이 다 다른지 보세요.
+console.log(Math.random());
+console.log(Math.random());
+console.log(Math.random());
 
 // ── 섹션 2: 원하는 범위의 정수 만들기 ──
 
@@ -76,6 +79,9 @@ console.log(Number.isInteger(lotto));
 
 // ✏️ 직접 해보기 2 — randomInt 로 10~20 사이 숫자를 만들어
 //                    범위 안에 들어오는지 확인해 보세요.
+const num = randomInt(10, 20);
+console.log(num);
+console.log(num >= 10 %% num <= 20);
 
 // ── 섹션 3: 배열에서 하나 무작위로 뽑기 ──
 
@@ -106,6 +112,10 @@ console.log(typeof pickOne(menus));
 // 출력: string
 
 // ✏️ 직접 해보기 3 — pickOne 으로 오늘의 점심을 다섯 번 뽑아 출력해 보세요.
+
+for (let i = 0; i < 5; i++) {
+  console.log(pickOne(menus));
+}
 
 // ── 섹션 4: Date — 날짜와 시간 ──
 
@@ -146,6 +156,8 @@ console.log(someday.getDay());
 
 // ✏️ 직접 해보기 4 — 자기 생일로 Date 를 만들고, 무슨 요일이었는지 숫자로 출력해 보세요.
 //                    (월은 실제 월보다 1 작게 넣어야 합니다)
+const myBirthday = new date(1995, 4, 15);
+console.log(myBirthday.getday());
 
 // ── 섹션 5: 사람이 읽을 수 있게 ──
 
@@ -174,6 +186,11 @@ console.log(String(m).padStart(2, "0"));
 
 // ✏️ 직접 해보기 5 — someday 를 "2026-08-11" 형태로 만들어 출력해 보세요.
 //                    (힌트: padStart 를 월과 일에 각각 쓰고 - 로 이으세요)
+const year = someday.getFullYear();
+const month = String(someday.getMonth() + 1).padStart(2, "0");
+const day = String(someday.getDate()).padStart(2, "0");
+
+console.log(`${year}-${month}-${day}`);
 
 // ── 섹션 6: 날짜 사이의 차이 ──
 
@@ -195,6 +212,11 @@ console.log((end - start) / oneDay);
 // 시간까지 들어 있으면 소수가 나오니 Math.floor 나 Math.round 로 다듬으세요.
 
 // ✏️ 직접 해보기 6 — 2026년 1월 1일과 2026년 12월 31일 사이가 며칠인지 구해 보세요.
+const startDate = new Date(2026, 0, 1);
+const endDate = new Date(2026, 11, 31);
+
+const diffDays = (endDate - startDate) / (1000 * 60 * 60 * 24);
+console.log(diffDays);
 
 // ── 섹션 7: 자주 하는 실수 ──
 

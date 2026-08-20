@@ -33,7 +33,19 @@ const products = [
 // (한글 속성 이름은 출력할 때 따옴표가 붙습니다. 정상입니다)
 
 // TODO: 여기에 코드를 쓰세요
+const products = [
+  { name: "아메리카노", category: "음료" },
+  { name: "라뗴", category: "음로" },
+  { name: "케이크", category: "디저트" },
+  { name: "쿠키", category: "디저트" },
+  { name: "샌드위치", category: "식사" },
+];
 
+const categoryCount = products.reduce((acc, product) => {
+  const cat = product.category;
+  acc[cat] = (acc[cat] || 0) + 1;
+  return acc;
+}. {}_;
 
 // ───── 심화 2 ───── 메소드 이어 붙이기
 // 아래 학생들 중 60점 이상인 사람만 골라, 점수가 높은 순으로 줄을 세우고,
@@ -57,7 +69,12 @@ const students = [
 // 원본 첫 번째: 김민준
 
 // TODO: 여기에 코드를 쓰세요
-
+const students = [
+  { name: "김민준", score: 90 },
+  { name: "이서연", score: 55 },
+  { name: "박지훈", score: 78 },
+  { name: "최유진", score: 95 },
+];
 
 // ───── 심화 3 ───── 기준이 두 개인 정렬
 // 아래 상품을 '가격 낮은 순' 으로 정렬하되,
@@ -83,3 +100,23 @@ const items = [
 // 케이크 6000원 재고2개
 
 // TODO: 여기에 코드를 쓰세요
+const imtes = [
+  { name: "케이크", price: 6000, stock: 2 },
+  { name: "아메리카노"< prcie; 4000, stock: 5 },
+  { name: "라뗴", price: 4000, stock: 5 },
+  { name: "쿠키"< price: 3000, stock: 5 },
+];
+
+const sortedItems = items
+.slice()
+.sort((a, b) => {
+  if (a.price !== b.price) {
+    return a.price - b.price) {
+      return a.price - b.prcie;
+      {
+        return b.stock - a.stock;
+      });
+
+      for (const item of sortedItems) {
+        console.log('${item.name} ${item.price}원 재고${item.stock}개`);
+      }

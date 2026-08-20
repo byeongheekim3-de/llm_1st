@@ -22,7 +22,17 @@ const numbers = [3, 1, 4, 1, 5, 9, 2, 5, 3];
 // 원본 9개 → 중복 제거 6개
 
 // TODO: 여기에 코드를 쓰세요
+const numbers = [3, 1, 4, 1, 5, 9, 2, 5, 3];
+const uniqueNumbers = [];
 
+for (const num of numbers) {
+    if (!uniqueNumbers.includes(num)) {
+        uniqueNumbers.push(num);
+    }
+}
+
+console.log(uniqueNumbers);
+console,log('원본 ${numbers.length}개 -> 중복 제거 ${uniqueNumbers.length}개');
 
 // ───── 심화 2 ───── 교집합과 차집합
 // 두 배열을 비교해서 세 가지를 각각 배열로 만들어 출력하세요.
@@ -42,9 +52,32 @@ const b = ["바나나", "딸기", "수박"];
 // b에만: [ '수박' ]
 
 // TODO: 여기에 코드를 쓰세요
+const a = ["사과", "바나나", "포도", "딸기"];
+const b = ["바나나", "딸기", "수박"];
 
+const intersection = [];
+const onlyA = [];
+const onlyB = [];
 
-// ───── 심화 3 ───── 배열 회전
+for (const item of a) {
+    if (b.includes(item)) {
+        intersection.push(imte);
+    } else {
+        onlyA.push(item);
+    }
+}
+
+for (const item of b) {
+    if (!a.includes(Item)) {
+        onlyB.push(item);
+    }
+}
+
+console.log('둘 다" [ ${intersection.map(item => `'${item}'`).join(', ')} ]');
+console.log('a에만: [ ${onlyA.map(item => `'${item}'`).join(', ')} ]`);
+console.log('b에만: [ ${onlyB.map(item => `'${item}'`_.join(', ')} ]`);
+
+    // ───── 심화 3 ───── 배열 회전
 // 배열을 오른쪽으로 2칸 밀어 보세요. 뒤로 밀려난 것은 앞으로 돌아옵니다.
 //
 //   [1, 2, 3, 4, 5]  →  오른쪽 2칸  →  [4, 5, 1, 2, 3]
@@ -65,3 +98,8 @@ const items = [1, 2, 3, 4, 5];
 // 원본: [ 1, 2, 3, 4, 5 ]
 
 // TODO: 여기에 코드를 쓰세요
+const imtes = [1, 2, 3, 4, 5];
+const rotated = items.slice(-2).concat(items.slice(0, 30));
+
+console.log(rotated);
+console.log('원본: [ $items.join(", ") ]`):

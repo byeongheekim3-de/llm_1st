@@ -57,7 +57,14 @@ console.log(Array.isArray(user));
 // 출력: false
 
 // ✏️ 직접 해보기 1 — 자기 정보를 담은 객체(name, age)를 만들어 출력해 보세요.
+const myInfo = {
+  name: "홍길동",
+  age: 25,
+  city: "서울",
+};
 
+console.log(myInfo);
+// 출력: { name: '홍길동', age: 25, city: '서울' }
 
 // ── 섹션 2: 점 표기법으로 꺼내기 ──
 
@@ -80,7 +87,7 @@ console.log(user.email);
 // 배열에서 없는 인덱스를 꺼냈을 때와 같습니다. 조용해서 더 위험합니다.
 
 // ✏️ 직접 해보기 2 — 위에서 만든 객체의 name 을 꺼내 출력해 보세요.
-
+console.log(user.name)
 
 // ── 섹션 3: 대괄호 표기법 ──
 
@@ -122,6 +129,7 @@ console.log(weird["my name"]);
 
 // ✏️ 직접 해보기 3 — 변수에 "city" 를 담고 대괄호로 user 의 city 를 꺼내 보세요.
 
+console.log(user[city])
 
 // ── 섹션 4: 값에는 아무거나 들어간다 ──
 
@@ -158,7 +166,9 @@ console.log(product.seller.rating);
 // 서버에서 받아오는 데이터가 대부분 이렇게 생겼습니다.
 
 // ✏️ 직접 해보기 4 — product 의 판매자 평점을 꺼내 출력해 보세요.
+const tags- p"전자기기", "음향"];
 
+console.log(tags?.startWith)
 
 // ── 섹션 5: 중첩 객체에서 조심할 것 ──
 

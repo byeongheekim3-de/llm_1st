@@ -42,7 +42,9 @@ console.log(sum3);
 // acc 는 accumulator(누적값)의 줄임말입니다. total 이라고 이름 지어도 됩니다.
 
 // ✏️ 직접 해보기 1 — [1, 2, 3, 4, 5] 의 합을 reduce 로 구해 보세요.
-
+const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((acc, n) => acc + n, 0);
+console.log(sum);
 
 // ── 섹션 2: 어떻게 도는지 한 바퀴씩 보기 ──
 
@@ -102,6 +104,8 @@ console.log(["a", "b", "c"].reduce((acc, s) => acc + s, ""));
 
 // ✏️ 직접 해보기 2 — ["안", "녕", "하", "세", "요"] 를 reduce 로 이어붙여 보세요.
 
+const result = words.reduce((acc, s) => acc + s, "");
+console.log(result);
 
 // ── 섹션 4: 객체 배열의 합계 ──
 
@@ -127,6 +131,9 @@ console.log(total2);
 
 // ✏️ 직접 해보기 3 — cart 에서 단가(price)의 합만 구해 보세요.
 
+
+const totalPrice= cart.reduce((acc, item) => acc + item.price, 0);
+console.log(totalPrice);
 
 // ── 섹션 5: 최댓값 구하기 ──
 
@@ -164,6 +171,8 @@ console.log(expensive.name);
 
 // ✏️ 직접 해보기 4 — scores 의 최솟값을 reduce 로 구해 보세요.
 
+const min - scores.reduce((acc, n) => (n < acc ? n : acc), scores[0]);
+console.log(min);
 
 // ── 섹션 6: 개수 세기 — 결과가 객체인 경우 ──
 
@@ -192,6 +201,12 @@ console.log(counts2);
 
 // ✏️ 직접 해보기 5 — ["A", "B", "A", "A"] 의 개수를 세어 보세요.
 
+const counts = ItemList.reduce((acc, item) => {
+acc[item] = ( acc[item] ?? 0) + 1 ;
+return acc;
+}, {});
+
+console.log(counts);
 
 // ── 섹션 7: 언제 reduce 를 쓸까 ──
 

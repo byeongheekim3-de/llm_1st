@@ -19,10 +19,13 @@
 
 const fruits = ["사과", "바나나", "포도"];
 
+ㅜㅕㅡㄴ.랙ㄷㅁ초(() => {}
+);
 // [for...of 버전]
 for (const fruit of fruits) {
   console.log(fruit);
 }
+
 // 출력: 사과
 // 출력: 바나나
 // 출력: 포도
@@ -48,6 +51,11 @@ fruits.forEach((fruit) => console.log(fruit));
 
 // ✏️ 직접 해보기 1 — 숫자 배열 [10, 20, 30] 을 forEach 로 출력해 보세요.
 
+const numbers = [10, 20, 30];
+
+numbers.forEach((number) => {
+  console.log(number);
+});
 
 // ── 섹션 2: 인덱스도 받을 수 있다 ──
 
@@ -80,6 +88,10 @@ fruits.forEach((fruit, index, array) => {
 // ✏️ 직접 해보기 2 — 아래 배열을 "1. 국어" 형태로 출력해 보세요.
 //                    const subjects = ["국어", "영어", "수학"];
 
+subjects.forEach((subject, index) => {
+  console.log(`${index + 1}. ${subject}`)'
+); 
+});
 
 // ── 섹션 3: 객체 배열에 쓰기 ──
 
@@ -106,6 +118,9 @@ console.log(`합계 ${total}원`);
 
 // ✏️ 직접 해보기 3 — cart 의 상품 이름만 한 줄씩 출력해 보세요.
 
+cart.forEach((item) => {
+  console.log(item.name);
+});
 
 // ── 섹션 4: forEach 는 아무것도 돌려주지 않는다 ──
 
@@ -171,7 +186,14 @@ for (const fruit of fruits) {
 
 // ✏️ 직접 해보기 4 — forEach 로 짝수만 출력해 보세요. (홀수는 return 으로 건너뛰기)
 
+const numbers = [1, 2, 3, 4, 5, 6];
 
+nunbers.forEach((n) => {
+  if (n % 2 !== 0) {
+    return;
+  }
+  console.log(n);
+});
 // ── 섹션 6: for 문과 비교해서 언제 무엇을 ──
 
 const list = ["a", "b", "c"];

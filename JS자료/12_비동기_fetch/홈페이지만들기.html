@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>포스코 AI 아카데미 지원 시스템</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #f4f6f9;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+      }
+      .container {
+        background: white;
+        width: 450px;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .course-card {
+        border: 2px solid #0056b3;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 20px;
+        background: #f8fafc;
+      }
+      .tag {
+        background: #e11d48;
+        color: white;
+        padding: 3px 8px;
+        font-size: 12px;
+        font-weight: bold;
+        border-radius: 4px;
+      }
+      .status-box {
+        font-size: 14px;
+        margin-top: 10px;
+        color: #334155;
+        font-weight: bold;
+      }
+      .highlight {
+        color: #e11d48;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+        background: #0056b3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      button:disabled {
+        background: #cbd5e1;
+        cursor: not-allowed;
+      }
+      #log-panel {
+        margin-top: 15px;
+        border-top: 1px solid #cbd5e1;
+        padding-top: 10px;
+        font-size: 13px;
+        color: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>포스코 스마트 제조 AI 인재 양성</h2>
+      <p style="color: #64748b; font-size: 14px">
+        기존 홈페이지의 지루한 공고를 실시간 마감 임박 UI로 전면 개편
+      </p>
+
+      <!-- 교육 과정 카드 -->
+      <div class="course-card">
+        <span class="tag">인기과정</span>
+        <h3 style="margin: 8px 0">LLM 기반 스마트팩토리 AI Assistant 개발</h3>
+        <p style="margin: 0; font-size: 13px; color: #64748b">
+          기간: 4개월 (포항 오프라인 교육)
+        </p>
+
+        <!-- 실시간 동기화 영역 -->
+        <div class="status-box">
+          현재 잔여 정원: <span id="seats" class="highlight">5</span>명 / 30명
+          총원
+        </div>
+      </div>
+
+      <button id="apply-btn">즉시 지원하기 (선착순 마감)</button>
+
+      <!-- 비동기 알림 로그 출력 영역 -->
+      <div id="log-panel">
+        <strong>실시간 알림:</strong>
+        <div id="log-content">페이지 로딩 완료. 지원자를 대기 중입니다.</div>
+      </div>
+    </div>
+
+    <script>
+      // DOM 요소 선택
+      const applyBtn = document.getElementById("apply-btn");
+      const seatsDisplay = document.getElementById("seats");
+      const logContent = document.getElementById("log-content");
+
+      let currentSeats = 5; // 초기 남은 좌석수
+
+      // [이벤트 처리] 지원 버튼 클릭 시 발생
+      applyBtn.addEventListener("click", function () {
+        applyBtn.disabled = true;
+        logContent.innerText = "포스코 선착순 접수 서버와 동기화 중입니다...";
+
+        // [비동기 처리 & 데이터 동기화] 서버 접수 처리 과정을 시뮬레이션
+        setTimeout(function () {
+          currentSeats--; // 좌석 데이터 차감
+
+          // 데이터 기반으로 화면(DOM) 갱신 및 동기화
+          seatsDisplay.innerText = currentSeats;
+          logContent.innerHTML =
+            "<b>지원 완료!</b> 최종 선발 결과는 문자로 안내됩니다.";
+
+          if (currentSeats <= 0) {
+            applyBtn.innerText = "접수 마감";
+          } else {
+            applyBtn.disabled = false;
+          }
+        }, 500);
+      });
+
+      const liveSync = setInterval(function () {
+        if (currentSeats > 1) {
+          currentSeats--;
+          seatsDisplay.innerText = currentSeats;
+          logContent.innerHTML =
+            "[알림] 방금 타 지역 지원자가 접수하여 잔여 자리가 <b>" +
+            currentSeats +
+            "개</b> 남았습니다.";
+        } else {
+          clearInterval(liveSync);
+        }
+      }, 5000);
+    </script>
+  </body>
+</html>

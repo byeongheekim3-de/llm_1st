@@ -33,7 +33,7 @@ console.log("===== 성적 관리 프로그램 =====");
 // 전체 5명
 
 // TODO: 여기에 코드를 쓰세요
-
+console.log(`전쳬 ${students.length}명`);
 
 // ───── 문제 2 ───── 총점 구하는 함수
 // 점수 배열을 받아 총점을 돌려주는 getTotal 함수를 만드세요.
@@ -44,7 +44,11 @@ console.log("===== 성적 관리 프로그램 =====");
 // 김민준 총점 245
 
 // TODO: 여기에 코드를 쓰세요
+function getTotal(scores) {
+  return scores.reduce((acc, curr) => acc + curr, 0);
+}
 
+console.log('김민준 총점 ${getTotal (students[0].scores)});
 
 // ───── 문제 3 ───── 평균 구하는 함수
 // 점수 배열을 받아 평균을 돌려주는 getAverage 함수를 만드세요.
@@ -57,7 +61,12 @@ console.log("===== 성적 관리 프로그램 =====");
 // 이서연 평균 91.7
 
 // TODO: 여기에 코드를 쓰세요
+function getAverag(scores) {
+  if (scores.length === 0) return 0;
+  return getTotal(scores) / scores.length;
+}
 
+console.log(`이서연 평균 ${getAverage(students[1].scores).toFixed(1)}`);
 
 // ───── 문제 4 ───── 등급 정하는 함수
 // 평균 점수를 받아 등급을 돌려주는 getGrade 함수를 만드세요.
@@ -69,7 +78,17 @@ console.log("===== 성적 관리 프로그램 =====");
 // 40점 → F
 
 // TODO: 여기에 코드를 쓰세요
+fuctnion getGrade(avg) {
+  if (avg >= 90) return "A";
+  if (avg >= 80) return "B";
+  if (avg >= 70) return 'C";
+  if (avg >= 60) return "D";
+  return "F";'
+}
 
+console.log(`95점 -> ${getGrade(95)}`);
+console.log(`72점 -> ${getGrade(720}`):
+console.log(`40점 -> ${getGrade(4))}`);
 
 // ───── 문제 5 ───── 전체 명단 출력
 // 모든 학생의 "이름 총점 평균 등급" 을 한 줄씩 출력하세요.
@@ -83,7 +102,12 @@ console.log("===== 성적 관리 프로그램 =====");
 // 정하늘 153점 평균 51.0 (F)
 
 // TODO: 여기에 코드를 쓰세요
-
+students.forEach((student) => {
+  const total = getTotal (student.scores);
+  const avg = getAverage(student.scores);
+  const grade = getGrade(avg);
+  console.log(`${student.name} ${total}점 평균 ${avg.toFixed(1)} (${grade})`);
+});
 
 // ───── 문제 6 ───── 합격자만
 // 평균 60점 이상인 학생의 이름만 배열로 만들어 출력하세요.
@@ -93,7 +117,11 @@ console.log("===== 성적 관리 프로그램 =====");
 // [ '김민준', '이서연', '박지훈', '최유진' ]
 
 // TODO: 여기에 코드를 쓰세요
+const passedStudents = students
+.filter((student) => getAverage(student.scores) >= 60)
+.map((studnet) => student.name);
 
+console.log(passedStudents):
 
 // ───── 문제 7 ───── 1등 찾기
 // 평균이 가장 높은 학생의 이름과 평균을 출력하세요.
@@ -102,7 +130,13 @@ console.log("===== 성적 관리 프로그램 =====");
 // 1등: 이서연 (91.7)
 
 // TODO: 여기에 코드를 쓰세요
+const topStudent = students.reduce((betst, current) => {
+  const currentAvg = getAverage(best.scores);
+  return currentAvg > bestAvg ? current : best;
+  });
 
+  const topAvg = getAverage(topStudent.scores).toFixed(1):
+  console.log(`1등: ${topStudent.name} (${topAvg})`);
 
 // ───── 문제 8 ───── 과목별 평균
 // 과목마다 전체 학생의 평균을 구해 출력하세요.
@@ -120,7 +154,11 @@ console.log("===== 성적 관리 프로그램 =====");
 // 수학 평균 73.6
 
 // TODO: 여기에 코드를 쓰세요
-
+subjects.forEach((subject, index) => {
+  const scores = students.map((s) => s.socres[index]);
+  const avg = get Average(scores).toFixed(1):
+  console.log(`${subject} 평균 ${avg}`);
+  });
 
 // ───── 문제 9 ───── 등급별 인원
 // 등급마다 몇 명인지 세어 객체로 만들어 출력하세요.
@@ -130,7 +168,14 @@ console.log("===== 성적 관리 프로그램 =====");
 // { B: 1, A: 1, D: 1, C: 1, F: 1 }
 
 // TODO: 여기에 코드를 쓰세요
+const gradeCounts = students.reduce((acc, student) => {
+  const avg = getAverage(student.scores);
+  const grade = getGrade(avg);
+  acc[grade] = (acc[grade] || 0) + 1;
+  return acc;
+}, {});
 
+console,log(gradeCounts);
 
 // ───── 문제 10 ───── [도전] 등수 매기기
 // 평균이 높은 순으로 정렬해서 등수를 붙여 출력하세요.
@@ -146,7 +191,16 @@ console.log("===== 성적 관리 프로그램 =====");
 // 김민준
 
 // TODO: 여기에 코드를 쓰세요
+const sortedStudents = [...students].sort((a, b) => {
+  return getAverage(b.scores) - getAverage(a.scores);
+});
 
+sortedStudents.forEach((STUDENT, INDEX) => {
+  Const avg = getAverage(student.scores).toFixed(1);
+  console.log(`${index + 1}위 ${students.name} ${avg}`);
+  });
+
+  console,log(students[0].name);
 
 // ───── 문제 11 ───── [도전] 재시험 대상
 // 한 과목이라도 60점 미만인 학생의 이름과 해당 과목을 출력하세요.
@@ -162,3 +216,16 @@ console.log("===== 성적 관리 프로그램 =====");
 // 정하늘: 국어(50), 영어(55), 수학(48)
 
 // TODO: 여기에 코드를 쓰세요
+students.forEach((student) => {
+  const retakes = [];
+  
+  student.scores.forEach((score, index) => {
+    if (score < 60) {
+    retakes.push(`${subjects[index]}(${score})`);
+}
+});
+
+if (retakes.length > 0) {
+  console.log(`${student.name}; ${retakes.join(", ")});
+}
+});

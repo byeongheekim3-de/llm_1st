@@ -31,6 +31,10 @@
 
 // TODO: 여기에 코드를 쓰세요
 
+console.log(Number(""));
+console.log(Number(" "));
+console.log(Number("12abc:"));
+console.log(Number(null)):
 
 // ───── 심화 2 ───── parseInt 는 어디까지 읽나
 // 같은 네 값을 이번엔 parseInt 로 바꿔서 출력하세요.
@@ -45,7 +49,10 @@
 // NaN
 
 // TODO: 여기에 코드를 쓰세요
-
+console.log(parseInt("")):
+console.log(parseInt(" ")):
+console.log(parseInt("12abc"));
+console.log(parseInt(null));))
 
 // ───── 심화 3 ───── falsy 여섯 개를 한 번에 확인
 // 개념04에서 "false 로 취급되는 값이 여섯 개" 라고 배웠습니다.
@@ -63,3 +70,5 @@
 
 // TODO: 여기에 코드를 쓰세요
 // (console.log 두 번으로 끝내세요. 쉼표로 나열하면 한 줄에 나옵니다)
+console.log(Boolean(0), Bollean(""), Boolean(null), Boolean(undefiend), Boolean(NaN)
+console.log(Boolean("0"), Boolean(" "), Boolean("false"));

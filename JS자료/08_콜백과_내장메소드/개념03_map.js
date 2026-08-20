@@ -42,6 +42,10 @@ console.log(doubled);
 
 // ✏️ 직접 해보기 1 — [1, 2, 3] 의 각 값을 10배로 만든 새 배열을 만들어 보세요.
 
+const numbers = [1, 2, 3];
+const result = numbers.map(n) => n * 10);
+console.log(resut);
+// 출력 : [ 10, 20, 30 ]
 
 // ── 섹션 2: 반드시 값을 돌려줘야 한다 ──
 
@@ -104,6 +108,11 @@ console.log(scores.map((s) => ({ score: s })));
 
 // ✏️ 직접 해보기 3 — ["1", "2", "3"] 을 숫자 배열로 바꿔 보세요.
 
+const inputs = ["1", "2", "3"};
+  const nums = inputs.map((v) => Number(v));
+  console.log(nums);
+  // 출력: [ 1, 2, 3 ]
+]
 
 // ── 섹션 4: 객체 배열에서 값만 뽑기 ──
 
@@ -144,6 +153,8 @@ console.log(cards);
 // ✏️ 직접 해보기 4 — users 에서 이름만 뽑아 " / " 로 이어 출력해 보세요.
 
 
+const names = users.map((user) => user.name); console.log(names.join(" / "));
+
 // ── 섹션 5: 인덱스도 받을 수 있다 ──
 
 const menu = ["아메리카노", "라떼", "케이크"];
@@ -168,6 +179,8 @@ console.log(menu.map((item, i) => `${i + 1}. ${item}`).join("\n"));
 //                    const fruits = ["사과", "포도"];
 //                    결과는 [ '1 사과', '2 포도' ] 형태면 됩니다.
 
+const result = fruits.map((fruit, index) => `${index + 1} ${fruit}`);
+console.log(result);
 
 // ── 섹션 6: 언제 map, 언제 forEach ──
 

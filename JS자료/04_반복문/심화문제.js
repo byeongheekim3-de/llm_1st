@@ -7,7 +7,6 @@
 // [이건 선택 과제입니다]
 //   연습문제를 다 푼 사람만 하세요. 안 풀어도 다음 단원에 지장 없습니다.
 
-
 // ───── 심화 1 ───── 구구단을 가로로
 // 2단부터 4단까지를 아래처럼 한 줄에 하나씩 출력하세요.
 //
@@ -21,7 +20,13 @@
 // 4단: 4 8 12 16 20 24 28 32 36
 
 // TODO: 여기에 코드를 쓰세요
-
+for (let dan = 2; dan <= 4; dan++) {
+  let row = dan + "단:";
+  for (let i = 1; i <= 9; i++) {
+    row += " " + dan * i;
+  }
+  console.log(row);
+}
 
 // ───── 심화 2 ───── 3의 배수이면서 5의 배수
 // 1부터 100까지 중 3으로도 나누어떨어지고 5로도 나누어떨어지는 수를
@@ -35,7 +40,21 @@
 // 총 6개
 
 // TODO: 여기에 코드를 쓰세요
+let result = "";
+let count = 0;
 
+for (let i = 1; i <= 100; i++) {
+  if (i % 3 !== 0 || i % 5 !== 0) {
+    continue;
+  }
+
+  if (count === 0) {
+    result += i;
+  } else {
+    result += " " + i;
+  }
+  count++;
+}
 
 // ───── 심화 3 ───── 숫자 뒤집기
 // 12345 를 54321 로 뒤집어 출력하세요.
@@ -60,3 +79,17 @@ const number = 12345;
 // 5자리
 
 // TODO: 여기에 코드를 쓰세요
+const number = 12345;
+let current = number;
+let reversed = 0;
+let digitCount = 0;
+
+while (current > 0) {
+  let digit = current % 10;
+  reversed = reversed * 10 + digit;
+  current = Math.floor(current / 10);
+  digitCoutn++;
+}
+
+console.log(reversed);
+console.log("${digitCount}자리");

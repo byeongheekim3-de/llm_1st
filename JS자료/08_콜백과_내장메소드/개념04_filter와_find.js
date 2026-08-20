@@ -49,6 +49,9 @@ console.log(`합격자 ${scores.filter((s) => s >= 60).length}명`);
 
 // ✏️ 직접 해보기 1 — [12, 7, 30, 5] 에서 10 이상인 값만 골라 보세요.
 
+const numbers = [12, 7 , 30, 5];
+const result = numbers.filter((n) => n=> 10);
+console.log(result);
 
 // ── 섹션 2: filter 는 true/false 만 본다 ──
 
@@ -75,6 +78,10 @@ console.log(scores.filter((s) => s * 2));
 // 값을 바꾸려면 map 입니다.
 
 // ✏️ 직접 해보기 2 — ["a", "", "b", ""] 에서 빈 문자열을 걸러 보세요.
+
+const words = ["a", "", "b", ""[];
+const result = words.filter((w) => w);
+console. log(result);
 
 
 // ── 섹션 3: 객체 배열에서 filter ──
@@ -106,6 +113,8 @@ console.log(products.filter((p) => p.stock > 0 && p.price <= 5000).map((p) => p.
 
 // ✏️ 직접 해보기 3 — products 에서 5000원 이상인 상품 이름만 뽑아 보세요.
 
+const result = products.filter((p) => p.price >= 5000).map((p) => p.name);
+console.log(result);
 
 // ── 섹션 4: find — 첫 번째 하나만 ──
 
@@ -144,6 +153,8 @@ console.log(notFound?.price ?? "해당 상품 없음");
 
 // ✏️ 직접 해보기 4 — products 에서 이름이 "쿠키" 인 상품의 가격을 출력해 보세요.
 
+const cookie = products.find((p) => p.name === "쿠키");
+console.log(cookie?.price);
 
 // ── 섹션 5: findIndex — 몇 번째인지 ──
 
@@ -170,6 +181,8 @@ console.log(list.map((p) => p.name));
 
 // ✏️ 직접 해보기 5 — products 에서 재고가 0인 첫 상품의 위치를 출력해 보세요.
 
+const idx = products.findIndex((p) => p.stock === 0;
+console.log(idx);
 
 // ── 섹션 6: some 과 every — 있나? 전부인가? ──
 
@@ -200,6 +213,10 @@ if (products.some((p) => p.stock === 0)) {
 
 // ✏️ 직접 해보기 6 — scores 에 90점 이상이 하나라도 있는지 확인해 보세요.
 
+const scores = [90, 55, 78, 40, 88];
+
+const hasHighScore = scores.some((score) => score >= 90);
+console.log(hasHighScore);
 
 // ── 섹션 7: 무엇을 쓸까 ──
 

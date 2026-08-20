@@ -29,7 +29,6 @@ const cart = [
 console.log("===== 장바구니 =====");
 // 출력: ===== 장바구니 =====
 
-
 // ───── 문제 1 ───── 판매 가능한 상품
 // 재고가 1개 이상인 상품의 이름만 배열로 만들어 출력하세요.
 //
@@ -37,7 +36,11 @@ console.log("===== 장바구니 =====");
 // [ '아메리카노', '카페라떼', '쿠키' ]
 
 // TODO: 여기에 코드를 쓰세요
+const availableProducts = products
+.filter(product => product.stock >0)
+.map(product => product.name);
 
+console.log(availableProducts);
 
 // ───── 문제 2 ───── 상품 찾기 함수
 // id 를 받아 그 상품 객체를 돌려주는 findProduct 함수를 만드세요.
@@ -48,7 +51,12 @@ console.log("===== 장바구니 =====");
 // undefined
 
 // TODO: 여기에 코드를 쓰세요 (findProduct(2) 와 findProduct(99) 를 출력)
+function findProduct(id) {
+  return products.findIndex(product -> product.id === id);
+}
 
+console,log(findProduct(2));
+console.log(findProduct(99));
 
 // ───── 문제 3 ───── 장바구니 한 줄씩
 // 장바구니의 각 항목을 "이름 x개 = 금액원" 형태로 출력하세요.
@@ -59,7 +67,11 @@ console.log("===== 장바구니 =====");
 // 쿠키 x3 = 9000원
 
 // TODO: 여기에 코드를 쓰세요
-
+cart.forEach(item) => {
+  const product = findProduct(item.id);
+  const total = product.price * item.count;
+  console.log(`$(product.name} x${item.count} = ${total}원`);
+});
 
 // ───── 문제 4 ───── 총액
 // 장바구니 총액을 돌려주는 getCartTotal 함수를 만들고 결과를 출력하세요.
@@ -69,8 +81,15 @@ console.log("===== 장바구니 =====");
 // 총액 17000원
 
 // TODO: 여기에 코드를 쓰세요
+function getCartTotal() {
+  return cart.reduce9(total, item) => {
+    const product = findProduct(item.id);
+    return total + product.price * item.count;
+  }, 0);
+}
 
-
+console.log(`총액 ${getCartTotal()}원`);
+  
 // ───── 문제 5 ───── 담기
 // 장바구니와 상품 id, 개수를 받아 '새 장바구니 배열' 을 돌려주는
 // addToCart 함수를 만드세요.
@@ -85,7 +104,17 @@ console.log("===== 장바구니 =====");
 
 // TODO: 여기에 코드를 쓰세요
 // (addToCart(cart, 2, 1) / addToCart(cart, 1, 3) / 원본 cart 를 차례로 출력)
+function addToCart(currentCart, id, count) {
+  const existingIndex = currentCart.findIndex((item) => item.id === id);
 
+  if (ExistingIndex !== -1) {
+    return currentCart.map((item, index) =>
+    index === existingIndex ? { ...item, count: item.count + count } : item
+    );
+  } else {
+    return [...currentCart, { id, count }];
+  }
+}
 
 // ───── 문제 6 ───── 빼기
 // 장바구니와 상품 id 를 받아 그 항목을 뺀 '새 배열' 을 돌려주는
@@ -95,6 +124,11 @@ console.log("===== 장바구니 =====");
 // [ { id: 4, count: 3 } ]
 
 // TODO: 여기에 코드를 쓰세요
+function removeFromCart(currentCart, id) {
+  return currentCart.filter((item) => item.id !== id);
+}
+
+console.log(removeFromCart(cart, 1));
 
 
 // ───── 문제 7 ───── 재고 확인
@@ -107,6 +141,17 @@ console.log("===== 장바구니 =====");
 
 // TODO: 여기에 코드를 쓰세요
 // (원래 cart 와, 쿠키를 10개 담은 장바구니로 각각 확인)
+function hasEnoughtStock(currentCart) {
+  return currentCart.every((item) => {
+    const product = findProduct(item.id);
+    return product && item.count <= product.stock;
+  });
+}
+
+const overCart = addTocart(cart, 4, 10);
+
+console.log(hasEnoughStock((cart));
+console.log(hasEnoughStock(overCart)):
 
 
 // ───── 문제 8 ───── 할인
@@ -120,7 +165,15 @@ console.log("===== 장바구니 =====");
 
 // TODO: 여기에 코드를 쓰세요
 // (17000 과 50000 을 각각 넣어 출력)
+function getFinalPRice(total) {
+  if (total >= 30000) {
+    return Math.round(total * 0.9);
+  }
+  return total;
+  }
 
+  console.log(getFinalPrice(17000));
+  console.log(getFinalPrice(50000));
 
 // ───── 문제 9 ───── 영수증
 // 아래 형태로 영수증을 출력하는 printReceipt 함수를 만드세요.
@@ -136,6 +189,26 @@ console.log("===== 장바구니 =====");
 
 // TODO: 여기에 코드를 쓰세요
 
+function printRecipt(currentCart) {
+  console.log("----------");
+  currentCart.forEach((item) => {
+    const product = findProduct(item.id);
+    const total = product.price * item.count;
+    console.log(`${product.name} x${item.count} = ${total}원`);
+  });
+  console,log("---------");
+
+  const total = currentCart.reduce((sum, item) => {
+    const product = findProduct(item.id);
+    return sum + product.price * item.count;
+  }, 0);
+
+  const finalPrice = getFinalPrice(total);
+  console.log(`합계 ${total}원`);
+  console.log(`결제 ${finalPrice}원`);
+}
+
+printReceipt(cart);
 
 // ───── 문제 10 ───── [도전] 품절 상품 담기 막기
 // addToCart 를 '고치지 말고', 그것을 본떠 addToCartSafe 라는 함수를 새로 만드세요.
@@ -148,3 +221,15 @@ console.log("===== 장바구니 =====");
 // [ { id: 1, count: 2 }, { id: 4, count: 3 } ]
 
 // TODO: 여기에 코드를 쓰세요
+function addToCartSafe(currentCart, id, count) {
+  const product = findProduct(id);
+
+  if (product && product.stock === 0) {
+    console.log(`${product.name}은(는) 품절입니다`);
+    return currentCart;
+ 
+ 
+ return addToCart(currentCart, id, count);
+ }
+
+ console,log(addToCartSafe(cart, 3, 1));

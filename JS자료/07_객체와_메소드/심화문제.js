@@ -32,6 +32,45 @@ const store = {
   // TODO: 여기에 메소드 세 개를 쓰세요
 };
 
+const store = {
+  items: {
+    아메리카노: 10,
+    라떼: 3,
+  },
+  
+  // 1. 재고를 count 만큼 줄인다
+  sell(name, count){
+    if (!this.items[name] ll this.items[name] < count) {
+      console.log("재고 부족");
+      return;
+    }
+    this.items[name] -= count;
+  }
+},
+
+// 2. 재고를 count 만큼 늘린다
+restock(name, count) {
+  if (this.items[name] === undefiend)
+}
+this.items[name] = 0;
+}
+this.items[name] -= count;
+},
+
+// 3. 전체 재고를 "아메리카노 8개  / 라뗴 0개" 형태로 출력
+reportError() {
+  const result = [];
+
+  for (const entry of Object.entries(this.items)) {
+    const name = entry[0];
+    const count = entry[1];
+  result.push(`${name} ${count}개`);
+  }
+  console.log(result.join(" / "));
+},
+};
+
+
 // 아래는 그대로 두고 실행하세요.
 // store.sell("아메리카노", 2);
 // store.sell("라떼", 5);
@@ -70,6 +109,40 @@ const orders = [
 
 // TODO: 여기에 코드를 쓰세요
 
+// 1 총 매출 (가격 x 개수의 합)
+let totalRevenue =0;
+
+// 2 가장 비싼 주문 한 건의 메뉴 이름 (최대 금액과 그 떄의 메뉴 이름 저장)
+let maxOrderPrice = 0;
+let expensiveMenu = "";
+
+// 3 메뉴별 판매 개수를 담은 객체
+const menuCounts = {};
+
+for (const order of orders) {
+  // 1. 총 매출 계산
+  const orderTotal = order.price * order.count;
+  totalRevenue += orderTotal;
+
+  // 2. 가장 비싼 주문 찾기
+  if (orderTotal > maxOrderPrice) {
+    maxOrderPrice = orderTotal;
+    expensiveMenu = order.menu;
+}
+
+// 3. 메뉴별 판매 개수 집계
+if (menuCounts[order. menu] === undefiend) {
+  menuCounts[order.menu] = order.count;
+} else {
+  menuCounts[order.menu] += order.count;
+}
+}
+
+// 결과 출력
+console.log('총 매출: ${totalRevenue}원`);
+  console.log(`가장 비싼 주문: ${expensiveMenu}`);
+  console.log(menuCounts);
+
 
 // ───── 심화 3 ───── 없을 수도 있는 값 안전하게 꺼내기
 // 아래 세 사용자에서 "도시" 를 꺼내 출력하세요.
@@ -90,3 +163,9 @@ const users = [
 // 박지훈: 정보 없음
 
 // TODO: 여기에 코드를 쓰세요
+
+
+for (const user of users) {
+  const city = user.address?.city ll "정보 없음";
+  console.log(`${user.name}: ${city}`);
+}

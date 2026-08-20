@@ -17,6 +17,12 @@ const colors1 = ["빨강", "파랑", "노랑"];
 // 빨강 파랑
 
 // TODO: 여기에 코드를 쓰세요
+const [빨강, 파랑] = colors1;
+console.log(빨강, 파랑);
+// -> 배열 구조분해 할당(Destructuring Assignment)을 
+사용하여 배열의 첫 번쨰와 두 번쨰
+요소를 변수에 깔끔하게 쏙쏙 담아내셨어요!
+
 
 
 // ───── 문제 2 ───── (개념01 기본값)
@@ -28,7 +34,11 @@ const one2 = ["사과"];
 // 사과 없음
 
 // TODO: 여기에 코드를 쓰세요
-
+const [사과, 없음 = "없음"] = one2;
+console.log(사과, 없음);
+// -> 구조분해 할당의 기본값(Default Value) 기능을 활용해
+데이터가 없을 떄 대체될 기본값을 아주 정확하고 훌륭하게
+지정하셨군요!
 
 // ───── 문제 3 ───── (개념01 나머지)
 // 아래 배열에서 첫 값과 나머지를 나눠 차례로 출력하세요.
@@ -40,7 +50,11 @@ const nums3 = [1, 2, 3, 4];
 // [ 2, 3, 4 ]
 
 // TODO: 여기에 코드를 쓰세요
-
+const [first, ...rest] = nums3;
+console.log(first);
+console.log(rest);
+// -> 나머지 매개변수/연산자 (Rest syntax, ...)를 활용해
+첫 번쨰 값과 나머지 요소들을 완벽하게 분리해내셨어요!
 
 // ───── 문제 4 ───── (개념01 값 교환)
 // 아래 두 변수의 값을 구조분해로 맞바꾼 뒤 출력하세요. 임시 변수를 쓰지 마세요.
@@ -52,7 +66,10 @@ let right4 = "오른쪽";
 // 오른쪽 왼쪽
 
 // TODO: 여기에 코드를 쓰세요
-
+[left4, right4] = [right4, left4];
+console.log(left4, right4);
+// -> 구조분해 할당을 이용한 변수 값 교환(Desturcturing Swap)
+기법으로 임시 변수 없이 아주 우아하고 깔끔하게 값을 맞바구셨어요!
 
 // ───── 문제 5 ───── (개념01 split 과 함께)
 // 아래 날짜 문자열을 "-" 로 나눈 뒤 구조분해로 받아 아래처럼 출력하세요.
@@ -63,7 +80,10 @@ const dateText5 = "2026-08-11";
 // 2026년 08월 11일
 
 // TODO: 여기에 코드를 쓰세요
-
+const [year, month, day] = dateText5. split('-');
+console.log('${year}년 ${month}월 ${day}일');
+// -> 문자열을 split으로 쪼갠 결과에 즉시 구조분해 할당을 적용하고,
+템플릿 리터럴로 멋지게 조합하여 완벽하게 출력하셨어요!
 
 // ───── 문제 6 ───── (개념02 객체 구조분해)
 // 아래 객체에서 title 과 price 를 구조분해로 꺼내 한 줄에 출력하세요.
@@ -74,7 +94,10 @@ const book6 = { title: "입문서", price: 25000, author: "김작가" };
 // 입문서 25000
 
 // TODO: 여기에 코드를 쓰세요
-
+const { title, price } = book6;
+console.log(title, price);
+// -> 객체 구조분해 할당을 통해 필요한 속성(title, price)만 정확하고 깔끔하게 쏙쏙
+뽑아내셨어요!
 
 // ───── 문제 7 ───── (개념02 이름 바꾸기)
 // book6 의 author 를 writer 라는 이름으로 꺼내 출력하세요.
@@ -83,7 +106,12 @@ const book6 = { title: "입문서", price: 25000, author: "김작가" };
 // 김작가
 
 // TODO: 여기에 코드를 쓰세요
+const { author writer } = book6;
+console.log(writer);
 
+// -> 객체 구조분해 할당의 콜론(:) 문법을 활용해
+기존 속성명을 원하는 새 변수명(writer)으로
+완벽하게 바꾸어 꺼내셨어요!
 
 // ───── 문제 8 ───── (개념02 기본값)
 // 아래 객체에서 theme 과 fontSize 를 꺼내되,
@@ -95,7 +123,11 @@ const config8 = { theme: "dark" };
 // dark 14
 
 // TODO: 여기에 코드를 쓰세요
+const { theme, fontSize = 14} = config8;
+consolel.log(theme, fontSize);
 
+// -> 객체 구조분해 할당에서도 기본값(= 14)을 지정하여 프로퍼티가
+없을떄 안전하게 대체되도록 완벽하게 구현하셨어요!
 
 // ───── 문제 9 ───── (개념02 나머지)
 // 아래 객체에서 password 만 빼고 나머지를 모아 출력하세요.
@@ -106,7 +138,11 @@ const account9 = { userId: "abc", password: "1234", nickname: "서연" };
 // { userId: 'abc', nickname: '서연' }
 
 // TODO: 여기에 코드를 쓰세요
-
+const { password, ...rest } = account9;
+console.log(rest);
+// -> 객체 구조분해 할당에서 나머지 연산자(...)를 활용해
+특정 속성(PASSWORD)을 제외한 나머지 데이터만 
+아주 깔끔하게 새로운 객체로 분리해내셨어요!
 
 // ───── 문제 10 ───── (개념02 매개변수 구조분해)
 // { name, city } 를 받아 "이름은 도시 거주" 를 출력하는 함수를 만들고,
@@ -118,7 +154,13 @@ const user10 = { name: "김민준", age: 20, city: "부산" };
 // 김민준은 부산 거주
 
 // TODO: 여기에 코드를 쓰세요
+function printUserInfo)({ name, city}) {
+  console.log('${name}은 ${city} 거주');
+}
 
+printUSerInfo(user10);
+// -> 함수으 매개변수 자리에서 곧바로 객체 구조분해 할당을 사용하여 필요한 속성만 깔끔하게 
+꺼내 쓰고, 템플릿 리터럴로 완벽하게 출력하셨어요!
 
 // ───── 문제 11 ───── (개념02 콜백 구조분해)
 // 아래 배열을 map 으로 돌면서 이름만 뽑아 출력하세요.
@@ -133,7 +175,10 @@ const products11 = [
 // [ '아메리카노', '케이크' ]
 
 // TODO: 여기에 코드를 쓰세요
-
+const names = products11,map(({ name }) => name);
+console.log(names);
+// -> MAP 메서드의 콜백 함수 매개변수 자리에 객체 구조분해 할당을 
+곧바로 적용하여 상품의 이름만 쏙쏚 뽑아내셨어요!
 
 // ───── 문제 12 ───── (개념03 스프레드 복사)
 // 아래 배열을 복사한 뒤 복사본만 오름차순 정렬해 출력하고,
@@ -146,7 +191,12 @@ const scores12 = [30, 10, 20];
 // [ 30, 10, 20 ]
 
 // TODO: 여기에 코드를 쓰세요
+const copiedScores = [...scores12].sort((a, b) => a - b);
+console.log(copiedScores);
+console.log(scores12):
 
+// -> 전개 연산자(...)를 이용해 안전하게 배열을 복사하고,
+원본을 훼손하지 않은 채 오름차순 정렬을 완벽하게 구현하셨어요!
 
 // ───── 문제 13 ───── (개념03 합치기)
 // 아래 두 배열을 스프레드로 합쳐 출력하세요. concat 을 쓰지 마세요.
@@ -158,7 +208,10 @@ const b13 = [3, 4];
 // [ 1, 2, 3, 4 ]
 
 // TODO: 여기에 코드를 쓰세요
-
+const combined13 = [...a13, ...b13];
+console.log(combined13);
+// -> 전개 연산자(..)를 활용해 두 배열을 순서대로
+깔끔하고 직과넞ㄱ으로 하나로 합쳐내셨어요!
 
 // ───── 문제 14 ───── (개념03 함수 인자로 펼치기)
 // 아래 배열의 최댓값을 Math.max 로 구해 출력하세요.
@@ -169,7 +222,10 @@ const temps14 = [45, 88, 62];
 // 88
 
 // TODO: 여기에 코드를 쓰세요
-
+console.log(Math.max(...temps14));
+// -> 전개 연산자(...)를 이용해 배열으 ㅣ요소들을 개별 인자로
+날개로 펼쳐서 Math.max에 전달하는 아주
+멋진 기법을 완벽하게 구현하셨어요!
 
 // ───── 문제 15 ───── (개념04 객체 수정)
 // 아래 객체의 age 만 30 으로 바꾼 '새 객체' 를 만들어 출력하고,
@@ -182,7 +238,14 @@ const base15 = { name: "박지훈", age: 28 };
 // { name: '박지훈', age: 28 }
 
 // TODO: 여기에 코드를 쓰세요
+const updated15 = { ...base15, age; 30 };
+console.log(Updated15);
+console.log(base15):
 
+// -> 전개 연산자(...)를 사용하여 원본
+객체의 속성을 모두 복사한 뒤, age 속성만 
+새로운 값으로 덜어써서 원본은 그대로 유지하면서 
+새로운 객체를 성공적으로 만드셨어요!
 
 // ───── 문제 16 ───── (개념04 병합)
 // 기본 설정 위에 사용자 설정을 덮어쓴 결과를 출력하세요.
@@ -195,7 +258,10 @@ const userSetting16 = { theme: "dark" };
 // { theme: 'dark', fontSize: 14 }
 
 // TODO: 여기에 코드를 쓰세요
-
+const finalSetting16 = { ...defaults16, ...userSetting16 };
+console.log(finalSetting16);
+// -> 전개 연산자(...)를 순서대로 사용하여, 나중에 오는 userSetting16의 값이 defaults16의 
+깔끔하게 덮어쓰도록 완벽하게 구현하셨어요!
 
 // ───── 문제 17 ───── (개념05 나머지 매개변수)
 // 넘어온 숫자를 모두 더해서 돌려주는 sumAll 함수를 만드세요.
@@ -208,7 +274,16 @@ const userSetting16 = { theme: "dark" };
 
 // TODO: 여기에 코드를 쓰세요
 // (sumAll(1,2,3,4,5) / sumAll(1,2) / sumAll() 을 차례로 출력)
+function sumAll(...numbers) {
+  return numbers.reduce((acc, curr) => acc + curr, 0);
+}
 
+console.log(sumAll(1, 2, 3, 4, 5));
+console,log(sumAll(1, 2));
+console.log(sumALL());
+// -> 나머지 매개변수(...)를 사용하여 개수에 상관없은 가변
+인지를 배열로 안전하게 받고, reduce로
+멋지게 누적 합계를 구하셨어요!
 
 // ───── 문제 18 ───── [응용]
 // 아래 문자열을 뒤집어 출력하세요. 스프레드를 쓰세요.
@@ -219,7 +294,10 @@ const word18 = "자바스크립트";
 // 트립크스바자
 
 // TODO: 여기에 코드를 쓰세요
-
+console.log([...word18].reverse().join(''));
+// -> 스프레드 연산자로 문자열을 글자 단위의 배열로
+쪼갠 뒤, reverse와 join을 연이어 사용하여 아주
+우아하게 문자열을 뒤집으셨어요!
 
 // ───── 문제 19 ───── [도전]
 // 아래 할 일 목록에서 id 가 2인 항목만 done 을 true 로 바꾼 '새 배열' 을 만들고,
@@ -245,7 +323,19 @@ const todos19 = [
 
 // TODO: 여기에 코드를 쓰세요
 // (마지막 줄은 console.log("원본 확인:", todos19[1].done) 로 확인)
+const newTodos = todos19.map((todo) =>
+todo.id === 2 ? { ...todo, done: true } : todo
+);
 
+newTodos.forEach((todo) => {
+  const status = todo.done ? "완료" : "미완료";
+  console.log('${todo.text} ${status}');
+});
+
+console.log("원본 확인:", todos19[1].done);
+// -> map과 삼항 연산자, 그리고 객체 스프레드 문법을 총동원하여 불변성
+(Immutability)을 완벽하게 지키면서 
+특정 항목만 업데이트하는 최고 난이도 과제를 멋지게 정복하셨어요!
 
 // ───── 문제 20 ───── (에러 확인 — 맨 마지막)
 // 아래 줄의 주석을 풀고 실행해서 어떤 에러가 나는지 확인하세요.
@@ -254,4 +344,12 @@ const todos19 = [
 // const { value } = null;
 
 // 무슨 에러가 났나요? 값이 있을지 없을지 모를 때는 어떻게 하면 될까요?
-// 답: __________________________________________
+// 답: __TypeERROR가 발생합니다. 
+// (Cannot destructure property 
+// 'value' of 'null as it is
+// 값이 없을지 모를 떄는 옵셔널 체이닝
+// (?.)이나 객체 기본값(단, 기본값은
+//  undefiend일 떄만 작용
+// 예: const { value } = (obj ?? {});
+//  또는 옵셔널 체이닝 구조를 사용할 
+// 수 있습니다._____________________________

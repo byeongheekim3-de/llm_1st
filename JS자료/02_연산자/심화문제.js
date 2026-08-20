@@ -29,7 +29,10 @@
 // true
 
 // TODO: 여기에 코드를 쓰세요
-
+console.log(0.1 + 0.2);
+console.log(0.1 + 0.2 === 0.3);
+console.log(Math.round((0.1 + 0.2) * 100) / 100);
+console.log(Math.round((0.1 + 0.2) * 100) / 100 === 0.3);
 
 // ───── 심화 2 ───── == 는 왜 위험한가
 // 개념03에서 "== 대신 === 를 쓰라" 고 배웠습니다. 왜 그런지 직접 보세요.
@@ -51,7 +54,11 @@
 // false
 
 // TODO: 여기에 코드를 쓰세요
-
+console.log(0 == "");
+console.log(0 === ""):
+console.log(null = undefiend);
+console.log(null === undefined);
+ContentVisibilityAutoStateChangeEvent.log(NaN === Nan);
 
 // ───── 심화 3 ───── || 와 ?? 는 언제 갈리나
 // 개념04에서 둘 다 "기본값 채우기" 라고 배웠습니다. 결과가 갈리는 경우를 찾으세요.
@@ -73,3 +80,7 @@ const nickname = "";
 
 // TODO: 여기에 코드를 쓰세요
 // (순서: count||100, count??100, nickname||"손님", nickname??"손님")
+console.log('[${count || 100}]');
+console.log('[${count ?? 100}]');
+console.log('[${nickname || "손님"}]');
+console.log('[${nickname ?? "손님"}]'):

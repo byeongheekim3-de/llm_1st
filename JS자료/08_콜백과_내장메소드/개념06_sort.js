@@ -96,7 +96,11 @@ console.log(original4);
 // ✏️ 직접 해보기 2 — 아래 배열의 원본은 그대로 두고 정렬된 복사본을 만들어 보세요.
 //                    const origin = [3, 1, 2];
 //                    (힌트: 06단원에서 배운 slice() 로 먼저 복사합니다)
+const origin [3, 1, 2];
+const sortedOrigin = origin.slice().sort((a, b) => a - b);
 
+console.log(sortedOrigin);
+console.log(origin);
 
 // ── 섹션 4: 객체 배열 정렬 ──
 
@@ -149,7 +153,9 @@ console.log(sortedByName.map((p) => p.name));
 
 // ✏️ 직접 해보기 4 — ["다", "가", "나"] 를 가나다순으로 정렬해 보세요.
 
+const sortedLetters = letters.slice().sort(((a, b) => a. localeCompare(B));
 
+console.log(sortedLetters);
 // ── 섹션 6: 정렬 + 자르기 — 상위 N개 뽑기 ──
 
 const scores = [88, 95, 62, 100, 74];

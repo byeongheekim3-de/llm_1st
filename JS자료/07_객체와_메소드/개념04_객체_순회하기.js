@@ -52,6 +52,18 @@ for (const key in user) {
 
 // ✏️ 직접 해보기 1 — 객체를 만들고 for...in 으로 "이름: 값" 을 출력해 보세요.
 
+// 포항 Dx 프로젝트 데이터를 담은 객체 생성
+const pohangDxData = {
+  planning: "수요 ㅇ측 및 자원 배분",
+  production: "AI 비전 검사 및 공정 제어",
+  LOGISTICS: "스마트 출하 및 agv 로봇 운용",
+};
+
+// for...in을 사용해 "이름: 값" 출력하기
+for (const key in pohangDxProject) {
+  console.log(`${key}: ${pohangDxProject[key]}`);
+}
+
 
 // ── 섹션 2: Object.keys — 이름들을 배열로 ──
 
@@ -111,6 +123,15 @@ console.log("평균:", (sum / scoreList.length).toFixed(1));
 
 // ✏️ 직접 해보기 3 — scores 의 값 중 최고점을 구해 보세요.
 
+Let MaxScore = ScoreList[0];
+
+for (const score of scoreList) {
+  if (score > maxScore) {
+    maxScore = score;
+  }
+}
+
+console.log("최고점:", maxScore);
 
 // ── 섹션 4: Object.entries — 이름과 값을 한꺼번에 ──
 
@@ -146,6 +167,11 @@ for (const [key, value] of Object.entries(user)) {
 
 // ✏️ 직접 해보기 4 — Object.entries 로 scores 를 "과목: 점수" 형태로 출력해 보세요.
 
+const scores = { 국어: 90, 영어: 85, 수학: 70 };
+
+for (const entry of Object.entries(scores)) {
+  console.log(`${entry[0]}: ${entry[1]}`);
+}
 
 // ── 섹션 5: 무엇을 쓸까 ──
 
