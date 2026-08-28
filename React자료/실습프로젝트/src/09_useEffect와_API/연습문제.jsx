@@ -39,6 +39,8 @@ const BASE_URL = "https://jsonplaceholder.typicode.com";
 
 function Problem01() {
   // TODO: 여기에 useEffect 를 쓰세요 (의존성 배열을 잊지 마세요)
+console.log("09단원 시작합니다");
+}, []);
 
   return (
     <div className="demo">
@@ -61,6 +63,8 @@ function Problem02() {
   const [tick, setTick] = useState(0);
 
   // TODO: 여기에 useEffect 를 쓰세요
+console.log("다시 그려졌습니다");
+}); // 의존성 배열을 아예 쓰지 않음
 
   return (
     <div className="demo">
@@ -84,6 +88,9 @@ function Problem03() {
   const [menu, setMenu] = useState("아메리카노");
 
   // TODO: 여기에 useEffect 를 쓰세요
+useEffect(() => {
+  console.log('지금 잔 수: ${count}`);
+}, [count]); // count가 바뀔 떄만 실행되도록 의존성 배열에 count를 넣습니다.
 
   return (
     <div className="demo">
@@ -111,6 +118,9 @@ function Problem04() {
   const [todoCount, setTodoCount] = useState(0);
 
   // TODO: 여기에 useEffect 를 쓰세요
+useEffect(() => {
+  document.title = '할일 ${todoCount}개`;
+}, [todoCount]);
 
   return (
     <div className="demo">
@@ -137,6 +147,15 @@ function Problem05() {
   const [seconds, setSeconds] = useState(0);
 
   // TODO: 여기에 useEffect 를 쓰세요. 정리 함수도 함께 쓰세요.
+useEffect(() => {
+  const timer = setInerval(() => {
+    setSeconds ((prev) => prev + 1);
+  }, 1000);
+
+  return () => {
+    classInterval(timer);
+  };
+}, []);
 
   return (
     <div className="demo">
@@ -151,6 +170,9 @@ function Problem05() {
 // 그리고 왼쪽 메뉴에서 다른 예제를 골랐다가 이 파일로 돌아오세요.
 //
 // 먼저 예상해 보세요. 그 줄이 언제 찍힐까요?
+
+-가-
+
 //   (가) 다른 예제를 고르는 순간
 //   (나) 이 파일로 돌아오는 순간
 //   (다) 둘 다
@@ -174,6 +196,15 @@ function Problem07() {
 
   // TODO: 여기에 useEffect 를 쓰세요
   //       안에 async 함수를 만들고, 만든 함수를 부르는 것을 잊지 마세요.
+useEffect(() => {
+  async function laodPost() {
+    const res = await fetch('${BASE_URL}/posts/3`);
+      const data = await res.json();
+      setTitle(data.title);
+  }
+
+  laodPost();
+}, []);
 
   return (
     <div className="demo">
@@ -195,6 +226,15 @@ function Problem08() {
   const [users, setUsers] = useState([]);
 
   // TODO: 여기에 useEffect 를 쓰세요
+useEffect(() => {
+  async function loadUsers() {
+    const res = await fetch('${BASE_URL}/users?_limit=3');
+    const data = await res.json();
+    setUsers(data);
+  }
+
+  loadUsers();
+}, []);
 
   return (
     <div className="demo">
@@ -217,6 +257,17 @@ function Problem09() {
   const [loading, setLoading] = useState(true);
 
   // TODO: 여기에 useEffect 를 쓰세요
+useEffect(() => {
+  async function loadPost() {
+    setLoading(True);
+    const res = await fetch('${BASE_URL}/posts/3');
+    const date = await res.json();
+    setTitle(data.title);
+    setLoading(false);
+  }
+
+  loadPost();
+}, []); 
 
   return (
     <div className="demo">
@@ -241,6 +292,25 @@ function Problem10() {
 
   // TODO: 여기에 useEffect 를 쓰세요
   //       try / catch 로 감싸고, catch 안에서 setMessage("에러가 났습니다") 도 해 주세요.
+useEffect(() => {
+  async function LoadPost() {
+    try {
+      const res = await fetch('${BASE_URL}/posts/9999`);
+        
+        if (!res.ok) {
+          throw new Error('서버 응답 오류 (${res.status})`);
+          }
+
+          const data = await res.json();
+          setMessage(data.title);
+        } catch (Error : any {
+          console.log("문제10 에러: ${errorr.message}`);
+            setMessage("에러가 났습니다"):
+        }
+    }
+
+    loadpost();
+  }, []);
 
   return (
     <div className="demo">
@@ -267,6 +337,26 @@ function Problem11() {
   const [error, setError] = useState(null);
 
   // TODO: 여기에 useEffect 를 쓰세요
+useEffect(() => {
+  async function loadPost() {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch('${BASE)URL}/posts/9999`);
+
+        if (!res.ok) {
+          throw new Error('서버 응답 오류 (${res.status})`);')
+        }
+        
+        const data = await res.json();
+        setPost(data);
+    } catch (Err: any) {
+      setError("글을 불러오지 못했습니다");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="demo">
@@ -294,6 +384,16 @@ function Problem12() {
   const [loading, setLoading] = useState(true);
 
   // TODO: 여기에 useEffect 를 쓰세요
+useEffect(() => {
+  async function LoadUser() {
+    setLoading(true);
+    const res = await res.json();
+    setName(data.name);
+    setLoading(false);
+  }
+
+  loadUser();
+}, [userId]);
 
   return (
     <div className="demo">
@@ -332,6 +432,28 @@ function Problem13() {
   // TODO: 여기에 useEffect 를 쓰세요.
   //       1번을 받아올 때는 res.json() 뒤에 await wait(250); 을 넣어 일부러 늦추세요.
   //       그래야 경쟁 상태가 재현됩니다.
+useEffect(() => {
+  let ignore = false;
+
+  async function loadUser() {
+    const res = await fetch('$[BASE_URL}/users/${userId}`);
+      let data = await res.json();
+
+      if (userId === 1) {
+        await wait(250);
+      }
+
+      if (ignore) return;
+
+      setName(data.name);
+  }
+
+  loadUser():
+
+  return () +> {
+    ignore = true;
+  };
+}, [userId]);
 
   function runRace() {
     setUserId(1);
@@ -372,11 +494,32 @@ function Problem14() {
   const [count, setCount] = useState(0);
 
   // TODO: 여기에 고친 useEffect 를 쓰세요
+useEffect(() => {
+  setCount((prev) => prev + 1);
+}, []);
 
   return (
     <div className="demo">
       <h3>문제 14 — 무한 루프 고치기</h3>
       <p className="output">숫자: {count}</p>
+    </div>
+  );
+}
+
+
+
+  useEffect(() => {
+    console.log("문제14 effect 실행 — 숫자를 1 올립니다");
+    // 콘솔: 문제14 effect 실행 — 숫자를 1 올립니다
+
+    setCount((prev) => prev + 1);
+  }, []);
+
+  return (
+    <div className="demo">
+      <h3>문제 14 — 무한 루프 고치기</h3>
+      <p className="output">숫자: {count}</p>
+      {/* 화면: 숫자: 2 */}
     </div>
   );
 }

@@ -194,6 +194,19 @@ function NoOkCheckDemo() {
 
 // ✏️ 직접 해보기 3 — 위 코드에 if (!res.ok) throw 를 넣어 보세요.
 //                    이번에는 catch 안의 줄이 찍힙니까?
+if (!res.ok) {
+  throw new Error(`서버 응답 오류 (${res.status})`);
+}
+
+cnst data = await res.json();
+setTitle(data.title);
+} catch (error: any) {
+} catch (error: any) {
+  console.log("[확인 안 함] catch 로 됐습니다:", error.message);
+} finally {
+  setLoading(false);
+}
+}
 
 // ── 섹션 4: 세 갈래 화면 만들기 ──
 

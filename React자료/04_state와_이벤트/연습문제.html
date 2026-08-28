@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -99,8 +99,7 @@
     <p class="guide">
       script 안의 <strong>TODO</strong> 자리에 코드를 쓰고 저장한 뒤, 브라우저를
       <strong>새로고침(F5)</strong>하고 직접 눌러서 확인하세요.
-      <strong>F12 → Console</strong> 도 함께 보세요.
-      <br /><br />
+      <strong>F12 → Console</strong> 도 함께 보세요. <br /><br />
       1~12는 기본, 13은 [응용], 14는 [도전], 15는 에러 확인입니다.
       <br /><br />
       <strong>HTML 과 CSS 는 몰라도 됩니다.</strong> 위쪽
@@ -488,15 +487,18 @@
 
         function addOne() {
           // TODO: "아메리카노" 를 하나 추가하세요
-        }
+        }    <button id="q14BtnOne" onClick={addOne}>
+              한 잔 담기
 
         function addTwo() {
           // TODO: 한 번에 두 개가 추가되게 하세요
-        }
+        }   <button id="q14BtnTwo" onClick={addTwo}>
+              두 잔 담기
 
         function clear() {
           // TODO: 빈 배열로 되돌리세요
-        }
+        }   <button id="q14BtnClear" onClick={clear}>
+              비우기
 
         return (
           <div className="demo">
