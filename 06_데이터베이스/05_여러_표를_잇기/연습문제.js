@@ -189,6 +189,12 @@ async function 채점(번호) {
   답: `
     -- TODO: 점검기록과 설비를 이어서 설비 이름 · 점검일 · 결과를 뽑으세요
   `,
+  SELECT 설비.이름, 점검기록.점검일, 점검기록.결과
+  FROM 점검기록
+  JOIN 설비 ON 점검기록.설비번호 = 설비.설비번호
+  WHERE 설비.설비번호 IN (1, 2)
+  ORDER BY 점검번호;
+
 });
 
 
@@ -213,7 +219,14 @@ async function 채점(번호) {
   답: `
     -- TODO: 점검기록 · 설비 · 라인 · 작업자 네 표를 이으세요
   `,
-});
+  SELECT this.점검번호, s.이름 AS 설비이름, W.이름 AS 담당지이름, L.이름 AS 라인이름
+  FROM 점검기록 t
+  JOIN 설비 s ON t.설비번호 = s.설비번호
+  join 라인 l on s.라인코드 = l.라인코드
+  JOIN 작업자 w ON t.담당사번 = w.사번
+  WHERE t.점검번호 <= 6
+  ORDER BY t.점검번호;
+
 
 
 // ============================================================
@@ -235,7 +248,11 @@ async function 채점(번호) {
   답: `
     -- TODO: LEFT JOIN 하고, 오른쪽 표의 기본키가 NULL 인 줄만 남기세요
   `,
-});
+  SELECT 설비.설비번호, 설비.이름
+  FROM 설비`
+  LEFT JOIN 점검기록 ON 설비.설비번호 = 점검기록.설비번호
+  WHERE 점검기록.점검번호 IS NULL
+  ORDER BY 설비.설비번호;
 
 
 // ============================================================
@@ -256,9 +273,12 @@ async function 채점(번호) {
   기대: "컨베이어 1호,4 | 프레스 1호,3 | 용접로봇 1호,5 | 검사기 1호,3 | 포장기 1호,0",
   답: `
     -- TODO: 설비를 왼쪽에 두고 LEFT JOIN 한 뒤 GROUP BY 로 묶으세요
-  `,
-});
-
+ SELECT 설비.이름, COUNT(점검기록.점검번호) AS 점검건수
+ FROM 설비
+ LEFT JOIN 점검기록 ON 설비.설비번호 = 점검기록.설비번호
+ GROUP BY 설비.설비번호, 설비.이름
+ ORDER BY 설비.설비번호;
+    
 
 // ============================================================
 // 문제 5 — COUNT 세 가지
@@ -280,8 +300,9 @@ async function 채점(번호) {
   기대: "15,13,10",
   답: `
     -- TODO: COUNT(*), COUNT(칸), COUNT(DISTINCT 칸) 을 한 줄에 쓰세요
-  `,
-});
+  SELECT COUNT(*), COUNT(점수), COUNT(DISTINCT 점수)
+  FROM 점검기록;
+
 
 
 // ============================================================
@@ -302,9 +323,12 @@ async function 채점(번호) {
   기대: "컨베이어 1호,4 | 용접로봇 1호,5",
   답: `
     -- TODO: GROUP BY 로 묶고 HAVING 으로 거르세요
-  `,
-});
-
+SELECT s.이름, COUNT(t.점검번호) AS 건수
+FROM 설비 s
+JOIN 점검기록 t ON s.설비번호 = t.설비번호
+GROUP BY s.설비번호, s.이름
+HAVING COUNT(t.점검번호) >= 4
+ORDER BY s.설비번호;
 
 // ============================================================
 // 문제 7 — ★★★ LEFT JOIN 과 조건의 자리
@@ -328,9 +352,11 @@ async function 채점(번호) {
   기대: "컨베이어 1호,0 | 프레스 1호,1 | 용접로봇 1호,1 | 검사기 1호,0 | 포장기 1호,0",
   답: `
     -- TODO: '불량' 조건을 WHERE 가 아니라 어디에 넣어야 할까요
-  `,
-});
-
+  SELECT s.이름, COUNT(p.점검번호) AS 불량건수
+  FROM 설비 s
+  LEFT JOIN 점검기록 p ON s.설비번호 = p.설비번호 AND p.결과 = '불량'
+  GROUP BY s.설비번호, s.이름
+  ORDER BY s.설비번호;
 
 // ============================================================
 // 문제 8 — ★★★ 담당한 적 없는 작업자
@@ -352,9 +378,11 @@ async function 채점(번호) {
   기대: "105,정신입",
   답: `
     -- TODO: NOT IN 말고 안전한 것을 쓰세요
-  `,
-});
-
+SELECT 작업자.사번, 작업자.이름
+FROM 작업자
+LEFT JOIN 점검기록 ON 작업자.사번 = 점검기록.담당사번
+WHERE 점검기록.점검번호 IS NULL
+ORDER BY 작업자.사번;
 
 // ============================================================
 // 문제 9 — FILTER 로 조건별 세기
@@ -373,7 +401,17 @@ async function 채점(번호) {
   기대: "A,4,2,1 | B,5,2,1",
   답: `
     -- TODO: COUNT(*) FILTER (WHERE ...) 를 세 번 쓰세요
-  `,
+  SELECT L.라인코드,
+  COUNT(*) FILTER (WHERE t.결과 = '정상') AS 정상,
+  COUNT(*) FILTER (WHERE t.결과 = '주의') AS 주의,
+  COUNT(*) FILTER (WHERE t.결과 = '불량') AS 불량
+  FROM 라인 l
+  JOIN 설비 s ON l.라인코드 = s.라인코드
+  join 점검기록 t ON s.설비번호 = t.설비번호
+  GROUP BY l.라인코드
+  ORDER BY l.라인코드;
+
+    `,
 });
 
 
@@ -396,7 +434,12 @@ async function 채점(번호) {
   기대: "1,92 | 2,88 | 4,90 | 7,88 | 8,95 | 11,90 | 14,88",
   답: `
     -- TODO: WHERE 점수 > (평균을 구하는 서브쿼리)
-  `,
+  SELECT 점검번호, 점수
+  FROM 점검기록
+  WHERE 점수 > (SELECT AVG(점수) FROM 점검기록)
+  ORDER BY 점검번호;
+
+    `,
 });
 
 
@@ -421,8 +464,17 @@ async function 채점(번호) {
   기대: "B,78.00",
   답: `
     -- TODO: WITH 라인평균 AS (...) 로 시작해 보세요
-  `,
-});
+WITH 라인평균 AS (
+SELECT l.라인코드. ROUND(AVG(t.점수), 2) AS 평균점수
+FROM 라인 l
+JOIN 설비 s ON l.라인코드 = s.라인코드
+JOIN 점검기록 t ON s.설비번호 = t.설비번호
+GROUP BY l.라인코드
+)
+SELECT 라인코드, 평균점수
+FROM 라인평균
+ORDER BY 평균점수 DESC
+LIMIT 1;
 
 
 // ============================================================
@@ -445,8 +497,11 @@ async function 채점(번호) {
   기대: "1,92,1 | 4,90,2 | 2,88,3 | 7,88,3 | 3,71,5 | 5,65,6 | 6,48,7",
   답: `
     -- TODO: 순위를 매기는 윈도우 함수를 쓰세요
-  `,
-});
+SELECT 점검번호, 점수, RANK() OVER (ORDER BY 점수 DESC) AS 순위
+FROM 점검기록
+WHERE 설비번호 IN (1, 2)
+ORDER BY 순위 ASC, 점검번호 ASC;  
+ 
 
 
 // ============================================================
@@ -471,7 +526,19 @@ async function 채점(번호) {
   기대: "1,1,92 | 1,4,90 | 2,7,88 | 2,5,65 | 3,8,95 | 3,11,90 | 4,14,88 | 4,15,69",
   답: `
     -- TODO: ROW_NUMBER 로 설비마다 번호를 매기고, 서브쿼리로 감싸서 걸러 내세요
-  `,
+ WITH RankedChecks AS (
+ SELECT 설비번호, 점검번호, 점수,
+ ROW_NUMBER() OVER (
+ PARTITION BY 설비번호 
+ ORDER BY 점수 DESC NULLS LAST, 점검번호 ASC
+) AS rnum
+ FROM 점검기록 
+ )
+ SELECT 설비번호, 점검번호, 점수
+ FROM RankedChecks
+ WHERE rnum <= 2
+ ORDER BY 설비번호 ASC, rnum ASC;
+    `,
 });
 
 

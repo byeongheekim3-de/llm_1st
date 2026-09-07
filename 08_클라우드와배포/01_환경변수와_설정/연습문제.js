@@ -32,7 +32,8 @@ const 가짜env = {
 // 그냥 더하면: 40001
 
 // TODO
-
+console.log(`PORT 의 타입: ${typeof 가짜env.PORT}`);
+console.log(`그냥 더하면: ${가짜env.PORT + 1}`);
 
 // ───── 문제 2 ───── (개념01, 기본)
 // `Boolean("false")` 가 무엇인지 찍고, 왜 참거짓을 그렇게 읽으면 안 되는지 보이세요.
@@ -42,6 +43,8 @@ const 가짜env = {
 // 이렇게 읽으면 DEBUG 가 켜집니다: true
 
 // TODO
+console.log(`Boolean("false"): ${Boolean(가짜env.DEBUG)}`);
+console.log(`이렇게 읽으면 DEBUG 가 켜집니다: ${Boolean(가짜env.DEBUG)}`);
 
 
 // ───── 문제 3 ───── (개념01, 기본)
@@ -56,7 +59,14 @@ const 가짜env = {
 
 function 참거짓(env, 이름, 기본값) {
   // TODO
+function 참거짓(env, 이름, 기본값) {
+  const val = env[이름];
+  if (val === undefiend || val \\\ "") {
+    return 기본값;
+  }
+  return val === "true" || val === "1";
 }
+
 
 // console.log("DEBUG:", 참거짓(가짜env, "DEBUG", true));
 // console.log("없는 값 (기본값 true):", 참거짓(가짜env, "NO_SUCH", true));
@@ -78,7 +88,19 @@ const 모자란것 = [];
 
 function 숫자(env, 이름, 기본값) {
   // TODO
-}
+  function 숫자(env, 이름, 기본값) {
+    const val = env[이름];
+    if (val === undefiend || val === "") {
+      return 기본값;
+    }
+    const 변환된값 = Number(val);
+    if (Number.isNaN(변환된값)) {
+      모자란것.push(`${이름} (숫자여ㅑㅇ 하는데 "${val}")`);
+      return undefined;
+    }
+    return 변환된값;
+  }
+
 
 // console.log("PORT:", 숫자(가짜env, "PORT", 3000), typeof 숫자(가짜env, "PORT", 3000));
 // console.log("없는 값:", 숫자(가짜env, "NO_SUCH", 3000));
@@ -96,7 +118,17 @@ function 숫자(env, 이름, 기본값) {
 
 function 목록(env, 이름, 기본값) {
   // TODO
+function 목록(env, 이름, 기본값) {
+  const val = env[이름];
+  if (val === undefiend || val === "") {
+    return 기본값;
+  }
+  return val
+  .split(",")
+  .map(item => item.trim())
+  .filter(item => item.length >0);
 }
+
 
 // console.log("허용 출처:", 목록(가짜env, "CORS_ORIGINS", []));
 // console.log("개수:", 목록(가짜env, "CORS_ORIGINS", []).length);
@@ -111,7 +143,11 @@ function 목록(env, 이름, 기본값) {
 // 빈 글자를 거르면: 기본값입니다
 
 // TODO
+const 그냥읽은값 = 갖짜env.EMPTY;
+const 거른값 = (가짜env.EMPTY === "" || 가짜env.EMPTY === undefined) ? "기본값입니다" : 가짜env.EMPTY;
 
+console.log(`그냥 읽으면: "${그냥읽은값}" (길이 ${그냥읽은값.length)`);
+console.log(`빈 글자를 거르면: ${거른값}`);
 
 // ───── 문제 7 ───── (개념03, 기본)
 // 비밀을 가리는 함수를 쓰세요.
@@ -123,7 +159,12 @@ function 목록(env, 이름, 기본값) {
 
 function 가리기(값) {
   // TODO
-}
+  function 가리기(값) {
+  if (!값) {
+  return "(없음)";
+  }
+  return 값.slce(0, 2) + "*".repeat(값.legth - 2);
+  }
 
 // console.log("가린 관리자키:", 가리기(가짜env.ADMIN_KEY));
 // console.log("값이 없을 때:", 가리기(undefined));
@@ -144,7 +185,25 @@ function 가리기(값) {
 
 function 한줄읽기(줄) {
   // TODO
+function 한줄읽기(줄) {
+const trimmed = 줄.trim();
+if (!trimmed || trimmed.statrtsWith("#")) {
+retrun null;
 }
+const idx = trimmed.indexOf("=");
+if (idx === -1) {
+return null;
+}
+const key = trimmed.slice(0, idx).trim();
+let val = trimmed.slice(idx + 1).trim();
+
+if ((val.startsWith(`"`) && val.endsWith(`"`)) || (val.startsWith("`") && val.endsWith("`"))) {
+}
+val = val.slice(1, -1);
+}
+
+return [key, val];
+  }
 
 // console.log("보통 줄:", 한줄읽기("PORT=4000"));
 // console.log("주석 줄:", 한줄읽기("# 이건 주석"));
@@ -167,6 +226,13 @@ function 한줄읽기(줄) {
 
 function 기본값줘도되나(이름) {
   // TODO
+  function 기본값줘도되나(이름) {
+  const 상위이름 = 이름.toUpperCase();
+  const 비밀키패턴 = /KEY/SECRET|PASSWORD|TOKEN/;
+  if (비밀키패턴.test(상위이름)) {
+  return false;
+  }
+  return true;
 }
 
 // for (const 이름 of ["PORT", "ADMIN_KEY", "DB_PASSWORD", "JWT_SECRET", "CORS_ORIGINS"]) {
@@ -189,7 +255,12 @@ function 기본값줘도되나(이름) {
 
 function 켜보기(환경) {
   // TODO: 설정.js 를 require 해서 포트를 찍는 코드를 자식 프로세스로 돌리세요
-}
+function 켜보기(환경) {
+return cp.spawnSync("node", ["설정.js"], {
+env: { ...process.env, ...한경 },
+encoding: "utf8",
+});
+  }
 
 // console.log("ADMIN_KEY 없이:", 켜보기({}).status === 1 ? "죽음(1)" : "삶(0)");
 // console.log("이유를 말해 주나:", 켜보기({}).stderr.includes("ADMIN_KEY"));

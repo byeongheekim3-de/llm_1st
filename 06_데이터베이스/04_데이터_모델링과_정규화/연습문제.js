@@ -148,6 +148,14 @@ const 같은목록 = (내답, 정답) =>
 
 async function 연락처바꾸기(사번, 새번호) {
   // TODO: UPDATE 를 실행하고 바뀐 줄 수(number)를 돌려주세요
+  async function 연락처바꾸기(사번, 새번호) {
+    const result = await db.query(
+      'UPDATE 점검대장 SET 담당자연락처 = $1 WHERE 담당자사번 = $2`,
+      [새번호, 사번]
+    );
+    return result.rowCount;
+  }
+
   return -1;
 }
 
@@ -178,7 +186,8 @@ await 채점(1, "연락처 하나 바꾸는 데 몇 줄인가", async () => {
 // '갱신 이상' · '삽입 이상' · '삭제 이상' 중에서 (가)(나)(다) 순서대로 고르세요.
 
 // TODO: 여기에 답을 쓰세요
-const 답2 = null;
+const 답2 = ["갱신 이상", "삽입 이상", "삭제 이상"];
+null;
 
 await 채점(2, "이 사고들의 이름은 무엇인가", async () =>
   같은목록(답2, ["갱신 이상", "삽입 이상", "삭제 이상"]),
@@ -203,7 +212,26 @@ await 채점(2, "이 사고들의 이름은 무엇인가", async () =>
 
 async function B라인작업자() {
   // TODO: 표를 만들고, 값을 나눠 넣고, B라인 사번 배열을 돌려주세요
-  return [];
+ async function B라인작업자() {
+  await db.exec(`
+    CREATE TABLE 작업자라인_1정규형 (
+    사번 INT,
+    라인ㅋ드 TEXT,
+    PRIMARY KEY (사번, 라인코드)
+  );
+  
+  INSERT INTO 작업자라인_1정규형 (사번, 라인코드)
+  SELECT 사번, unnest(string_to_array(라인목록, `,`))
+  FROM 작업자라인;
+  `);
+
+  const res = await db.query(`
+    SELECT 사번 FROM 작업자라인_1벙규형 WHERE 랑인코드 = 'B' ORDER BY 사번
+    `);
+
+    return res.rows.map(row => row.사번);
+  }
+    return [];
 }
 
 await 채점(3, "한 칸에 값을 여러 개 넣으면", async () => {
@@ -236,7 +264,7 @@ await 채점(3, "한 칸에 값을 여러 개 넣으면", async () => {
 //   부분종속칸 : 기본키의 **일부**(부품코드)만으로 정해지는 칸 이름을 **가나다순 배열**로
 
 // TODO: 여기에 답을 쓰세요
-const 답4 = { 정규형: null, 부분종속칸: null };
+const 답4 = { 정규형: 1, 부분종속칸: ["부품단가", "부품이름"] };
 
 await 채점(4, "기본키의 절반에만 매달린 칸", async () =>
   답4.정규형 === 1 && 같은목록(답4.부분종속칸, ["부품단가", "부품이름"]),
@@ -260,7 +288,7 @@ await 채점(4, "기본키의 절반에만 매달린 칸", async () =>
 //   이행종속칸 : 라인코드를 거쳐 매달린 칸 이름을 **가나다순 배열**로
 
 // TODO: 여기에 답을 쓰세요
-const 답5 = { 정규형: null, 이행종속칸: null };
+const 답5 = { 정규형: 2, 이행종속칸: ["라인동", "라인이름"] };
 
 await 채점(5, "키가 아닌 칸에 매달린 칸", async () =>
   답5.정규형 === 2 && 같은목록(답5.이행종속칸, ["라인동", "라인이름"]),
@@ -289,6 +317,16 @@ const 답6정책 = null;
 
 async function 라인지워보기() {
   // TODO: 정책라인 'A' 를 지워 보고, 막히면 그 SQLSTATE 를 돌려주세요
+ CONST 답6정책 = ["RESTRICT", "CASCADE", "SET NULL"];
+
+ async function 라인지워보기() {
+  try {
+    await db.query("DELETE FROM 정책라인 WHERE 라인코드 = 'A'");
+    return null;
+  } catch (e) {
+    return e.code;
+  }
+ }
   return null;
 }
 
@@ -318,7 +356,7 @@ await 채점(6, "ON DELETE 를 상황에 맞게 고르기", async () => {
 //        가리키는 곳도 작업자 표입니다.
 
 // TODO: 여기에 답을 쓰세요
-const 답7 = null;
+const 답7 = ["1:N", "N:M", "1:1", "N:M", "1:N"];
 
 await 채점(7, "관계의 모양 고르기", async () =>
   같은목록(답7, ["1:N", "N:M", "1:1", "N:M", "1:N"]),
@@ -340,6 +378,19 @@ await 채점(7, "관계의 모양 고르기", async () =>
 
 async function 색인확인() {
   // TODO: { 처음: [...], 만든뒤: 개수 } 를 돌려주세요
+async function 색인확인() {
+  const res1 = await db.query(
+    "SELECT indexname From pg_indexes WHERE tablename = '정책설비' ORDER BY indexname"
+  );
+  const 처음 = res1.rows.map(r => r.indexname);
+
+  await db.query("CREATE INDEX idx_정책설비_라인코드 ON 정책설비(라인코드)");
+
+  const res2 = await db.query(
+    "SELECT count(*)::int AS cnt FROM pg_indexes WHERE tablename = '정책설비'"
+  );
+  const 만든뒤 = res2.rows[0].cnt;
+
   return { 처음: [], 만든뒤: -1 };
 }
 
@@ -379,6 +430,45 @@ const 문제9 = `
   -- TODO: 여기에 CREATE TABLE 넷과 INSERT 들을 쓰세요
   SELECT 1
 `;
+CREATE TABLE 라인 (
+  라인코드 TEXT PRIMARY KeyboardEvent,
+  이름 TEXT NOT null,
+  동 TEXT NOT null
+);
+
+CREATE TABLE 설비 (
+  설비번호 INT PRIMARY KeyboardEvent,
+  이름 TEXT NOT null,
+  라인코드 TEXT REFERENCE 라인(라인코드),
+  도입년도 INT NOT null
+);
+
+CREATE TABLE 작업자 (
+  사번 INT PRIMARY KeyboardEvent,
+  이름 TEXT NOT null,
+  소속라인 TEXT REFERENCES 라인(라인코드)
+);
+
+CREATE TABLE 작업자 (
+  사번 INT PRIMARY KeyboardEvent,
+  이름 TEXT NOT null,
+  소속라인 TEXT REFERENCES 라인(라인코드)
+);
+
+CREATE TABLE 점검기록 (
+  점검번호 INT PRIMARY KeyboardEvent,
+  설비번호 INT REFERENCES 설비(설비번호),
+  점검일 DATE NOT null,
+  결과 TEXT NOT null,
+  점수 INT,
+  담당사번 INT REFERENCES 작업자(사번)
+);
+
+INSERT INTO 라인 (라인코드, 이름, 동) VALUES
+('A', '조립1라인', '1동'),
+('B', '가공2라인', '1동'),
+('C', '포장3라인', '2동'),
+('D', '신설4라인', '2동');
 
 await 채점(9, "★ 통짜 표를 네 개로 나누기", async () => {
   await db.exec(문제9);
@@ -428,7 +518,18 @@ await 채점(9, "★ 통짜 표를 네 개로 나누기", async () => {
 
 const 문제10 = `
   -- TODO: 여기에 CREATE TABLE 하나와 INSERT 를 쓰세요
-  SELECT 1
+ CREATE TABLE 사원자격 (
+ 사번 INT REFERENCES 사원(사번),
+ 자격코드 TEXT REFERENCES 자격증(자격코드),
+ PRIMARY KEY (사번, 자격코드)
+ );
+
+ INSERT INTO 사웑격 (사번, 자격코드) VALUES
+ (101, 'WELD'),
+ (101, 'SAFE'),
+ (102, 'WELD').
+ (103, 'CRANE'),
+ (104, 'SAFE');
 `;
 
 await 채점(10, "N:M 을 중간 표로 풀기", async () => {
@@ -475,6 +576,32 @@ await 채점(10, "N:M 을 중간 표로 풀기", async () => {
 
 async function 고아치우기() {
   // TODO: { 고아: [...], 남은줄수: 숫자 } 를 돌려주세요
+  async function 고아치우기() {
+    const res = awiat db.query(`
+      SELECT DISTINCT 설비번호
+      FROM 생산실적
+      WHERE NOT EXISTS (
+      SELECT 1 FROM 설비대장 WHERE 설비대장.설비번호 = 생산실정ㅇ.설비번호
+      )
+      ORDER BY 설비번호
+  `);
+  const 고아 = res.rows.map(r => r.설비번호);
+
+  await db.query(`
+    DELETE FROM 생산실적
+    WHERE NOT EXISTS (
+    SELECT 1 FROM 설비대장 WHERE 설비대장.설비번호 = 생산실적.설비번호
+    )
+    `);
+
+    AWAIT db.QUERY(`
+      ALTER TABLE 생산실적
+      ADD CONSTRAINT 생산실적_설비번호_FKEY
+      FOREIGN KEY (설비번호) REFERENCES 설비대장(설비번호)
+      `);
+
+      const countRes = await db.query("SELECT count(*)::int AS 건수 FROM 생산실적`);
+        CONST 남은줄수 = COUNTrES.ROWS[0].건수;
   return { 고아: [], 남은줄수: -1 };
 }
 
@@ -517,6 +644,25 @@ await 채점(11, "[도전] 고아를 찾아내고 외래키를 걸기", async ()
 
 async function 집계검사() {
   // TODO: { 어긋난것: [...], 고친뒤: 숫자 } 를 돌려주세요
+ async function 집계검사() {
+  count res = await db.query(`
+    SELECT 설비이름 FROM 설비집계 G
+    WHERE 점검횟수 <> (SELECT count(*)::int FROM 점검대장 d WHERE d.설비이름 = g.설비이름)
+    ORDER BY 설비이름
+ `);
+ const 어긋난것 = res.rows.map(r => r.설비이름);
+
+ await db.query(`
+  UPDATE 설비집계 g
+  SET 점검횟수 = (SELECT count(*)::int FROM 점검대장 d WHERE d.설비이름 = g.설비이름)
+`);
+
+const checkRES = await db.query(`
+  SELECT count(*)::int AS CNT FROM 설비집계 g
+  Where 점검횟수 <> (SELECT count(*)::int FROM 점검대장 d WHERE d.설비이름 = g.설비이름)
+  `);
+  const 고친뒤 = checkRES.rows[0].cnt;
+
   return { 어긋난것: [], 고친뒤: -1 };
 }
 
@@ -558,8 +704,19 @@ await 채점(12, "[도전] 집계 칼럼이 어긋났는지 검사하기", async
 
 const 문제13 = `
   -- TODO: 여기에 CREATE TABLE 하나와 INSERT 를 쓰세요
-  SELECT 1
-`;
+  CREATE TABLE 점검배정 (
+  설비번호 INT REFERNCES 설비대장(설비번호) ON DELETE RESTRICT,
+  사번 INT REFERENCES 사원(사번) ON DELETE CASCADE,
+  배정일 DATE NOT NULL,
+  역할 TEXT NOT NULL,
+  PRIMARY KEY (설비번호, 사번, 배정일)
+  );
+
+  INSERT INTO 점검배정 (설비번호, 사번, 배정일, 역할) VALUES
+  (4, 101, '2024-04-01', '주담당'),
+  (4, 101, '2024-04-08`, '주담당`),
+  (4, 105, '2024-04-05', '보조');
+  ';
 
 await 채점(13, "[도전] 중간 표에 추가 정보를 붙이기", async () => {
   await db.exec(문제13);

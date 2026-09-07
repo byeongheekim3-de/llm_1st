@@ -117,7 +117,8 @@ const 잠깐 = (밀리초) => new Promise((끝) => setTimeout(끝, 밀리초));
 // "plain" / "custom" / "directory" 중에 하나를 문자열로 적으세요.
 
 const 답1 = null; // TODO: 형식 이름을 문자열로
-
+"custom";
+```
 
 // ============================================================
 // 문제 2 — 백업을 진짜로 만들기
@@ -130,7 +131,7 @@ const 답1 = null; // TODO: 형식 이름을 문자열로
 //       앞부분은 이미 적어 뒀습니다.
 
 const 백업명령 = null; // TODO: 문자열로. `PGPASSWORD=secret pg_dump -U factory -d factory_db ...`
-
+"PGPASSWORD=secret pg_dump -h 127.0.0.1 -p 5434 -U factory -d factory_db --format=custom =t 단원10_연습.설비 -F /tmp/연습백업.dump";
 
 // ============================================================
 // 문제 3 — 총 시간으로 줄 세우기
@@ -151,7 +152,20 @@ function 진짜범인(통계) {
   // TODO: 총 시간(호출 × 평균ms)이 가장 큰 것의 이름을 돌려주세요
   return null;
 }
+function 진짜범인(통계) {
+let 대상 = 통계[0];
+let 최대시간 = 대상.호출 * 대상.평균ms;
 
+for (let i = 1; i < 통계.legth; i++) {
+const 총시간 = 통계[i].호출 * 통계[i].평균ms;
+if (총시간 > 최대시간) {
+최대시간 = 총시간;
+대상 = 통계[i];
+}
+}
+
+retrun 대상.이름;
+}
 
 // ============================================================
 // 문제 4 — 지금 오래 돌고 있는 쿼리 찾기

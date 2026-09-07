@@ -87,8 +87,11 @@ async function 채점(번호, 제목, 검사) {
 
 const 문제1 = `
   -- TODO: 여기에 INSERT 문을 쓰세요
-  SELECT 1
+  SELECT 이름, 상태 FROM 설비 WHERE 라인 = 'A' AND 상태 = '가동'
 `;
+
+INSERT INTO 설비 (이름, 라인, 상태, 도업영ㄴ도)
+VALUES ('포장기 1호', 'A', '가동', 2025):
 
 await 채점(1, "INSERT 한 건", async () => {
   await db.query(문제1);
@@ -97,7 +100,9 @@ await 채점(1, "INSERT 한 건", async () => {
   return 줄?.라인 === "A" && 줄?.상태 === "가동" && 줄?.도입연도 === 2025;
 });
 // 출력:  1. INSERT 한 건 — ❌ 아직
-
+const 문제1 = `
+INSERT INTO 설비 (이름, 라인, 상태, 도입연도) VALUES ('포장기 1호', 'A', '가동', 2025)
+`;
 
 // ============================================================
 // 문제 2 — 여러 건을 한 문장으로
@@ -117,6 +122,10 @@ await 채점(2, "여러 건을 한 문장으로", async () => {
   return 넣기.affectedRows === 3 && 확인.rows.length === 3 && 확인.rows.every((줄) => 줄.상태 === "정지");
 });
 // 출력:  2. 여러 건을 한 문장으로 — ❌ 아직
+INSERTO INTO 설비 (이름, 라인, 도입연도)
+VALUES ('검사기 1호', 'A', 2024), ('검사기 2호', 'B', 2024), ('검사기 3호', 'C', 2025);
+const 문제2 = `
+INSERT INTO 설비 (이름, 라인, 도입연도) VALUES ('검사기 1호', 'A', 2024), ('검사기 2호' 'B', 2024), ('검사기 3호', 'C', 2025)`;
 
 
 // ============================================================
@@ -129,6 +138,13 @@ await 채점(2, "여러 건을 한 문장으로", async () => {
 async function 설비추가(이름, 도입연도) {
   // TODO: INSERT … RETURNING 을 써서 { id, 이름 } 을 돌려주세요
   return null;
+}
+async function 설비추가(이름, 도입연도) {
+  const result = await db.query(
+    "INSERT INTO 설비 (이름, 도입연도) VALUES ($1, $2) RETURNING id, 이름",
+    [이름, 도입연도]
+  );
+  return result.row[0];
 }
 
 await 채점(3, "RETURNING 으로 id 받기", async () => {
@@ -150,6 +166,7 @@ const 문제4 = `
   -- TODO: 여기에 SELECT 문을 쓰세요
   SELECT 이름 FROM 설비 WHERE false
 `;
+SELECT 이름 FROM 설비 WHERE 상태 IN ('점검', '고장') ORDER BY id;
 
 await 채점(4, "WHERE 와 IN", async () => {
   const 결과 = await db.query(문제4);
@@ -178,7 +195,7 @@ await 채점(5, "NULL 찾기", async () => {
   return 결과.rows[0]?.건수 === 기대.rows[0].건수 && 기대.rows[0].건수 > 0;
 });
 // 출력:  5. NULL 찾기 — ❌ 아직
-
+SELECT CountQueuingStrategy(*)::int AS 건수 FROM 설비 WHERE 담당자 IS null;
 
 // ============================================================
 // 문제 6 — LIKE 로 검색하기
@@ -190,6 +207,13 @@ await 채점(5, "NULL 찾기", async () => {
 async function 설비검색(검색어) {
   // TODO: ILIKE 와 파라미터를 써서 이름 배열을 돌려주세요
   return [];
+}
+async function 설비검색(검색어) {
+  const result = await db.query(
+    "SELECT 이름 FROM 설비 WHERE 이름 ILIKE $1",
+    [`%${검색어}%`]
+  );
+  return result.rows.ma(row => row.이름);
 }
 
 await 채점(6, "LIKE 로 검색하기", async () => {
@@ -218,7 +242,7 @@ await 채점(7, "정렬과 자르기", async () => {
   return 이름들 === "CNC 선반 1호,프레스 1호,컨베이어 1호" && /ORDER\s+BY[\s\S]*,\s*id/i.test(문제7);
 });
 // 출력:  7. 정렬과 자르기 — ❌ 아직
-
+SELECT 이름 FROM 설비 ORDER BY 도입연도, id LIMIT 3;
 
 // ============================================================
 // 문제 8 — 별칭과 계산 칸
@@ -232,6 +256,11 @@ const 문제8 = `
   -- TODO: 여기에 SELECT 문을 쓰세요
   SELECT 이름, 0 AS 사용연수 FROM 설비 WHERE false
 `;
+SELECT 이름, 2026 - 도입연도 AS 사용연수
+FROM 설비
+WHERE 도입연도 IS NOT NULL
+ORDER BY 사용연수 DESC
+LIMIT 2;
 
 await 채점(8, "별칭과 계산 칸", async () => {
   const 결과 = await db.query(문제8);
@@ -263,7 +292,13 @@ await 채점(9, "UPDATE 와 affectedRows", async () => {
   return 바뀐수 === 대상.rows[0].건수 && 확인.rows[0].건수 === 대상.rows[0].건수 && 다른라인.rows[0].건수 === 1;
 });
 // 출력:  9. UPDATE 와 affectedRows — ❌ 아직
-
+async function 라인점거(라인) {
+  const result = await db.query(
+    "UPDATE 설비 SET 상태 = '점검' WHERE 라인 = $1",
+    [라인]
+  );
+  return result.affectedRows;
+}
 
 // ============================================================
 // 문제 10 — DELETE 와 RETURNING
@@ -282,7 +317,12 @@ await 채점(10, "DELETE 와 RETURNING", async () => {
   return 지운수 === 100 && 남은것.rows[0].건수 === 0;
 });
 // 출력: 10. DELETE 와 RETURNING — ❌ 아직
-
+async function 불량기록지우기() {
+  const result = await db.qery(
+    "DELETE FROM 점검기록 WHERE 결과 = '불량' RETURNING *"
+  );
+  return result.rowCont;
+}
 
 // ============================================================
 // 문제 11 — UPSERT
@@ -294,6 +334,16 @@ await 채점(10, "DELETE 와 RETURNING", async () => {
 async function 생산기록(설비명, 날짜, 수량) {
   // TODO: INSERT … ON CONFLICT … DO UPDATE 를 써서 최종 수량(number)을 돌려주세요
   return -1;
+}
+async function 생산기록(설비명, 날짜, 수량) {
+  const result = await db.query(
+    'INSERT INTO 일일생산 (썰비명, 날짜, 수량)
+    VALUES ($1, $2, $3)
+    ON CONFLICT (설비명, 날짜)
+    DO UPDATE SET 수량 = 일일생산.수량 + EXCLUDED.수량
+    [설비명, 날짜, 수량]
+  );
+  return result.rows[0].수량;
 }
 
 await 채점(11, "UPSERT", async () => {
@@ -330,7 +380,17 @@ await 채점(12, "★ SQL 인젝션 막기", async () => {
   return 정상.length === 1 && 정상[0].이름 === "김반장" && 공격1.length === 0 && 공격2.length === 0;
 });
 // 출력: 12. ★ SQL 인젝션 막기 — ❌ 아직
-
+async function 생산기록(설비명, 날짜, 수량) {
+  const result = await db.query(
+    'INSERT INTO 일일생산 (설비명, 날짜, 수량)
+    VALUES ($1, $2, $3)
+    ON CONFLICT (설비명, 날짜)
+    DO UPDATE SET 수량 = 일일생산.수량 + EXCLUDED.수량
+    RETURNING 수량`,
+    [설비명, 날짜, 수량]
+  );
+  return result.row[0].수량;
+}
 
 // ============================================================
 // 문제 13 — [도전] ★ 허용 목록으로 정렬 막기
@@ -345,6 +405,24 @@ await 채점(12, "★ SQL 인젝션 막기", async () => {
 
 async function 설비목록(정렬칸, 방향) {
   // TODO: 허용 목록에서 고른 값만 SQL 에 넣으세요. 이름 배열을 돌려줍니다
+  async function 설비목록(절열칸, 밯양) {
+  const allowedColumns = {
+  '이름': '이름',
+  '라인': '라인',
+  '도입연도': '도입연도'
+  };
+  const allowedDirs = {
+  '오름': 'ASC',
+  '내림': 'DESC'
+  };
+
+  const col = allowedColums[정렬칸] || 'id';
+  const dir = allowedDirs[방향] || 'ASC';
+
+  const query = 'SELECET 이름 FROM 설비 ORDER BY ${col} ${dir}, id';
+  const result = awiat db.query(query);
+  return result.rows.map((줄) => 줄.이름);
+  }
   return [];
 }
 
@@ -385,6 +463,25 @@ await 채점(13, "[도전] 허용 목록으로 정렬 막기", async () => {
 
 async function 다음쪽(마지막id, 개수) {
   // TODO: WHERE 와 ORDER BY 와 LIMIT 으로 만드세요. OFFSET 은 쓰지 마세요
+async function 설비목록(정렬칸, 방향) {
+const allowedColumns = {
+'이름': '이름',
+'라인': '라인',
+'도입연도': '도입연도'
+};
+const allowedDirs = {
+'오름': 'ASC',
+'내림': 'DESC'
+};
+
+const col = allwedColumns[정렬칸] || 'id';
+const dir = allowedDirs[방ㅎ양] || 'ASC';
+
+const query = 'SELECET 이름 FROM 설비 ORDER BY ${col} ${dir}, id`;
+const result = await db.query(query);
+return result.rows.map((줄) => 줄.이름);
+}
+  
   return { ids: [], 다음: null };
 }
 
@@ -417,6 +514,14 @@ await 채점(14, "[도전] 키셋 페이지 나누기", async () => {
 
 async function 대량넣기() {
   // TODO: 한 문장으로 1000건을 넣고 넣은 줄 수를 돌려주세요
+async function 대량넣기() {
+  const result = await db.query(
+    `INSERT INTO 점검기록 (설비명, 결과, 점검일)
+     SELECT '대량설비' || i, '정상', '2026-09-01'::date + ((i - 1) % 30)
+     FROM generate_series(1, 1000) AS i`
+  );
+  return result.rowCount;
+}
   return -1;
 }
 
